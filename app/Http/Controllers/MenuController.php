@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Requests\StoreRole;
+
+use App\Http\Requests\StoreMenu;
+use App\Menu;
 use App\Role;
 use Illuminate\Http\Request;
 
-class RoleController extends Controller
+class MenuController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -24,8 +26,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-//        dd(Role::all());
-        return view('roles.index', ['roles' => Role::all()]);
+        $menus = Menu::doesntHave('parent')->orderBy('order', 'ASC')->get();
+
+        return view('menus.index', ['menus' => $menus]);
     }
 
     /**
@@ -35,28 +38,26 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('roles.create');
+        $parents = Menu::doesntHave('parent')->get();
+        $roles = Role::all();
+        return view('menus.create', ['parents' => $parents, 'roles' => $roles]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreRole  $request
+     * @param  \App\Http\Requests\StoreMenu  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRole $request)
+    public function store(StoreMenu $request)
     {
         //validate data
         $validateData = $request->validated();
+        $newMenu = Menu::create($validateData);
 
-        $role = new Role();
-        $role->role_name = $request->input('role_name');
-        $role->save();
+        $request->session()->flash('status', 'New Menu Created');
 
-        //Add flash message to print the role has been created
-        $request->session()->flash('status', 'Role Created');
-
-        return redirect()->route('roles.show', ['role_name' => $role->role_name]);
+        return redirect()->route('menus.show', ['menu' => $newMenu->id]);
     }
 
     /**
@@ -67,8 +68,9 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        return view('roles.show', ['role' => Role::findOrFail($id)]);
-//        dd(Role::find($id));
+        $menu = Menu::findOrFail($id);
+
+        return view('menus.show', ['menu' => $menu]);
     }
 
     /**
@@ -79,28 +81,28 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        return view('roles.edit', ['role' => Role::findOrFail($id)]);
+        $parents = Menu::doesntHave('parent')->get();
+        $roles = Role::all();
+        return view('menus.edit', ['menu' => Menu::findOrFail($id), 'parents' => $parents, 'roles' => $roles]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  App\Http\Requests\StoreRole  $request
+     * @param  \App\Http\Requests\StoreMenu  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreRole $request, $id)
+    public function update(StoreMenu $request, $id)
     {
-        $role = Role::findOrFail($id);
+        $menu = Menu::findOrFail($id);
         $validateData = $request->validated();
+        $menu->fill($validateData);
+        $menu->save();
 
-        $role->fill($validateData);
-        $role->save();
-
-        //Add flash message to print the role has been edited
-        $request->session()->flash('status', 'Role Edited');
-
-        return redirect()->route('roles.show', ['role_name' => $role->role_name]);
+        //Add flash message to print the menu has been edited
+        $request->session()->flash('status', 'Menu Edited');
+        return redirect()->route('menus.show', ['menu' => $menu->id]);
     }
 
     /**
