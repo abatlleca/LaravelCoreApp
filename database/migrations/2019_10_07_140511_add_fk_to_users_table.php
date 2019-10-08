@@ -15,8 +15,10 @@ class AddFkToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //Foreign keys for users
-            $table->string('role_id')->nullable();
-            $table->string('customer_id')->nullable();
+            $table->string('role_name')->nullable()->index();
+            $table->foreign('role_name')->references('role_name')->on('roles');
+            $table->unsignedBigInteger('customer_id')->nullable()->index();
+            $table->foreign('customer_id')->references('id')->on('customers');
         });
     }
 
@@ -28,7 +30,7 @@ class AddFkToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn(['role_id', 'customer_id']);
+            //$table->dropForeign('customer_id');
         });
     }
 }

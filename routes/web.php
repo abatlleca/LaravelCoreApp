@@ -21,7 +21,8 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/contact', 'HomeController@contact')->name('contact');
 
 //ADMIN routes
-Route::resource('/role', 'CallingCardController');
-Route::resource('/customer', 'CallingCardController');
+Route::resource('/roles', 'RoleController')->except(['destroy']);
+Route::resource('/customers', 'CustomerController')->except(['destroy']);
+Route::resource('/menus', 'MenuController');
 
 //CUSTOMER routes
