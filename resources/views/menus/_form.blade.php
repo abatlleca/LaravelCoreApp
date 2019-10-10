@@ -11,12 +11,8 @@
 </p>
 <p>
     <label>Parent Menu: </label>
-    <select name="parent_id"
-        @if (isset($menu) && count($menu->submenus) > 0)
-            disabled
-        @endif
-    >
-        <option value="">No parent</option>
+    <select name="parent_id">
+        <option value="0">No parent</option>
         @foreach($parents as $parent)
             <option value="{{ $parent->id }}"
             @if (isset($menu) && $menu->parent_id == $parent->id)

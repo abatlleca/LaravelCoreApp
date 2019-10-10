@@ -26,9 +26,9 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menus = Menu::doesntHave('parent')->orderBy('order', 'ASC')->get();
+//        $menus = Menu::menus();
 
-        return view('menus.index', ['menus' => $menus]);
+        return view('menus.index'/*, ['menus' => $menus]*/);
     }
 
     /**
@@ -38,7 +38,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        $parents = Menu::doesntHave('parent')->get();
+        $parents = Menu::menus();
         $roles = Role::all();
         return view('menus.create', ['parents' => $parents, 'roles' => $roles]);
     }
@@ -68,7 +68,7 @@ class MenuController extends Controller
      */
     public function show($id)
     {
-        $menu = Menu::findOrFail($id);
+        $menu = Menu::getSingleMenu($id);
 
         return view('menus.show', ['menu' => $menu]);
     }
@@ -81,9 +81,9 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
-        $parents = Menu::doesntHave('parent')->get();
+        $parents = Menu::all();
         $roles = Role::all();
-        return view('menus.edit', ['menu' => Menu::findOrFail($id), 'parents' => $parents, 'roles' => $roles]);
+        return view('menus.edit', ['menu' => $menu = Menu::getSingleMenu($id), 'parents' => $parents, 'roles' => $roles]);
     }
 
     /**
@@ -97,6 +97,7 @@ class MenuController extends Controller
     {
         $menu = Menu::findOrFail($id);
         $validateData = $request->validated();
+
         $menu->fill($validateData);
         $menu->save();
 

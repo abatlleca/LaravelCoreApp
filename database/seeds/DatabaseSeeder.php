@@ -13,18 +13,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('roles')->insert(
-            [
-                'role_name' => "ADMIN",
-                'created_at' => now(),
-            ]
-        );
-        DB::table('roles')->insert(
-            [
-                'role_name' => "CUSTOMER",
-                'created_at' => now(),
-            ]
-        );
+        $this->call(RolesTableSeeder::class);
+        $this->call(MenusTableSeeder::class);
 
         // $this->call(UsersTableSeeder::class);
         DB::table('users')->insert(

@@ -25,8 +25,9 @@ class StoreMenu extends FormRequest
     {
         return [
             'name' => 'bail|required|max:255|min:3',
-            'route' => 'bail|required|max:255|min:3',
+            'route' => 'bail|max:255|min:0',
             'order' => 'required',
+            'parent_id' => 'required',
             'role_name' => 'bail|required',
         ];
     }

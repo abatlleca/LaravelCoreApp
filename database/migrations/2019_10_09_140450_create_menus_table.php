@@ -17,11 +17,12 @@ class CreateMenusTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->string('name');
-            $table->string('route');
+            $table->string('route')->nullable();
             $table->string('icon')->nullable();
-            $table->unsignedInteger('order');
-            $table->unsignedBigInteger('parent_id')->nullable();
-            $table->foreign('parent_id')->references('id')->on('menus');
+            $table->smallInteger('order')->default(0);
+            $table->boolean('enabled')->default(1);
+            $table->unsignedBigInteger('parent_id')->default(0);
+
             $table->string('role_name')->index();
             $table->foreign('role_name')->references('role_name')->on('roles');
         });
@@ -34,6 +35,7 @@ class CreateMenusTable extends Migration
      */
     public function down()
     {
+        Schema::disableForeignKeyConstraints();
         Schema::dropIfExists('menus');
     }
 }

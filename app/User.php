@@ -41,4 +41,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\Role', 'role_name', 'role_name');
     }
+
+    public function hasRole ($role){
+        return $this->role_name === $role;
+    }
 }

@@ -14,16 +14,11 @@
                             <a href="{{ route('menus.create') }}">Create New Menu</a>
                         </p>
                         <ul>
-                        @forelse ($menus as $menu)
-                            <p>
-                                <li><a href="{{ route('menus.show', ['menu' => $menu->id]) }}"> {{ $menu->name }} </a>
-                                    <ul>
-                                        @foreach($menu->submenus as $submenu)
-                                            <li><a href="{{ route('menus.show', ['menu' => $submenu->id]) }}">{{ $submenu->name }}</a> </li>
-                                        @endforeach
-                                    </ul>
-                                </li>
-                            </p>
+                        @forelse ($menus_list as $key => $item)
+                            @if ($item['parent_id'] != 0)
+                                @break
+                            @endif
+                            @include('menus.partials.menu-item', ['item' => $item])
                         @empty
                             No Menus!
                         @endforelse
