@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Menu;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
@@ -25,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::share('menus_list', Menu::menus());
+        if (DB::getSchemaBuilder()->hasTable('menus')){
+            View::share('menus_list', Menu::menus());
+        }
     }
 }
