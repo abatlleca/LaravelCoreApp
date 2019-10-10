@@ -12,18 +12,49 @@ class MenusTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Menu::class)->create([
+        $m1 = factory(Menu::class)->create([
             'name' => 'Menus',
-            'route' => 'menus',
+            'route' => '',
             'parent_id' => 0,
             'order' => 0,
             'role_name' => 'ADMIN',
         ]);
 
         factory(Menu::class)->create([
+            'name' => 'List',
+            'route' => 'menus.index',
+            'parent_id' => $m1->id,
+            'order' => 0,
+            'role_name' => 'ADMIN',
+        ]);
+        factory(Menu::class)->create([
+            'name' => 'Create New',
+            'route' => 'menus.create',
+            'parent_id' => $m1->id,
+            'order' => 1,
+            'role_name' => 'ADMIN',
+        ]);
+
+        $m2 = factory(Menu::class)->create([
             'name' => 'Roles',
-            'route' => 'roles',
+            'route' => '',
             'parent_id' => 0,
+            'order' => 1,
+            'role_name' => 'ADMIN',
+        ]);
+
+        factory(Menu::class)->create([
+            'name' => 'List',
+            'route' => 'roles.index',
+            'parent_id' => $m2->id,
+            'order' => 0,
+            'role_name' => 'ADMIN',
+        ]);
+
+        factory(Menu::class)->create([
+            'name' => 'Create New',
+            'route' => 'roles.create',
+            'parent_id' => $m2->id,
             'order' => 1,
             'role_name' => 'ADMIN',
         ]);
@@ -40,22 +71,6 @@ class MenusTableSeeder extends Seeder
             'name' => 'Contact',
             'route' => 'contact',
             'parent_id' => 0,
-            'order' => 100,
-            'role_name' => 'ALL',
-        ]);
-
-        factory(Menu::class)->create([
-            'name' => 'Profile',
-            'route' => '',
-            'parent_id' => 0,
-            'order' => 101,
-            'role_name' => 'ALL',
-        ]);
-
-        factory(Menu::class)->create([
-            'name' => 'Logout',
-            'route' => '',
-            'parent_id' => 101,
             'order' => 100,
             'role_name' => 'ALL',
         ]);

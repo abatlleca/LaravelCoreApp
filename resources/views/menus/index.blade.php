@@ -14,11 +14,9 @@
                             <a href="{{ route('menus.create') }}">Create New Menu</a>
                         </p>
                         <ul>
-                        @forelse ($menus_list as $key => $item)
-                            @if ($item['parent_id'] != 0)
-                                @break
-                            @endif
-                            @include('menus.partials.menu-item', ['item' => $item])
+
+                        @forelse ($menus as $menu)
+                            @include('menus.partials.menu-item', ['item' => $menu])
                         @empty
                             No Menus!
                         @endforelse

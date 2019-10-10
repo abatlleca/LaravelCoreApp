@@ -15,7 +15,7 @@
                         @endif
                         <p>
                             <a href="{{ route('menus.edit', ['menu' => $menu->id]) }}">Edit</a>
-                            @if($menu->parent_id != null)
+                            @if($menu->parent_id != 0)
                                 <a href="{{ route('menus.show', ['menu' => $menu->parent_id]) }}">Go To Parent</a>
                             @endif
                         </p>

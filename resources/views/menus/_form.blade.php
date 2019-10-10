@@ -14,20 +14,24 @@
     <select name="parent_id">
         <option value="0">No parent</option>
         @foreach($parents as $parent)
-            <option value="{{ $parent->id }}"
-            @if (isset($menu) && $menu->parent_id == $parent->id)
-                selected
+            @if (isset($menu) && $parent->id == $menu->id)
+
+            @else
+                <option value="{{ $parent->id }}"
+                @if (isset($menu) && $menu->parent_id == $parent->id)
+                    selected
+                @endif
+                >{{ $parent->name }}</option>
             @endif
-            >{{ $parent->name }}</option>
         @endforeach
     </select>
 </p>
 <p>
     <label>Order: </label>
-    <input type="text" name="order" value="{{ old ('order', $menu->order ?? null) }}">
+    <input type="text" name="order" value="{{ old ('order', $menu->order ?? 0) }}">
 </p>
 <p>
-    <label>Role Required: </label>
+    <label>Required Role: </label>
     <select name="role_name">
         @foreach($roles as $role)
             <option value="{{ $role->role_name }}"

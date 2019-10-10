@@ -2,6 +2,7 @@
 
 namespace App;
 
+
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
@@ -16,7 +17,40 @@ class Menu extends Model
     ];
 
     public $parent;
-    public $submenus;
+    public $submenus = [];
+
+    public function getSubmenus(){
+        return $this->where('parent_id', $this->id)
+            ->orderby('order')
+            ->orderby('name')
+            ->get();
+    }
+
+    public function getParent(){
+        return $this->where('id', $this->parent_id)
+            ->get()
+            ->first();
+    }
+
+    public static function getSingleMenu($id){
+        $menu = Menu::findOrFail($id);
+        $menu->submenus = $menu->getSubmenus();
+        $menu->parent = $menu->getParent();
+
+        return $menu;
+    }
+
+    public static function getAllMenus(){
+        $allMenus = Menu::where('parent_id', 0)
+            ->orderby('order')
+            ->orderby('name')
+            ->get();
+        foreach ($allMenus as $singleMenu){
+            $singleMenu->submenus = $singleMenu->getSubmenus();
+        }
+
+        return $allMenus;
+    }
 
     public function role()
     {
@@ -54,24 +88,5 @@ class Menu extends Model
         return $menus->menuAll = $menuAll;
     }
 
-    public function getSubmenus(){
-        $this->submenus = $this->where('parent_id', $this->id)
-            ->orderby('order')
-            ->orderby('name')
-            ->get();
-    }
 
-    public function getParent(){
-        $this->parent = $this->where('id', $this->parent_id)
-            ->get()
-            ->first();
-    }
-
-    public static function getSingleMenu($id){
-        $menu = Menu::findOrFail($id);
-        $menu->getSubmenus();
-        $menu->getParent();
-
-        return $menu;
-    }
 }

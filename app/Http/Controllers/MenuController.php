@@ -26,9 +26,9 @@ class MenuController extends Controller
      */
     public function index()
     {
-//        $menus = Menu::menus();
+        $menus = Menu::getAllMenus();
 
-        return view('menus.index'/*, ['menus' => $menus]*/);
+        return view('menus.index', ['menus' => $menus]);
     }
 
     /**
@@ -38,8 +38,11 @@ class MenuController extends Controller
      */
     public function create()
     {
-        $parents = Menu::menus();
-        $roles = Role::all();
+        $parents = Menu::orderby('order')
+            ->orderby('name')
+            ->get();
+        $roles = Role::orderby('role_name')
+            ->get();
         return view('menus.create', ['parents' => $parents, 'roles' => $roles]);
     }
 
@@ -81,8 +84,11 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
-        $parents = Menu::all();
-        $roles = Role::all();
+        $parents = Menu::orderby('order')
+            ->orderby('name')
+            ->get();
+        $roles = Role::orderby('role_name')
+            ->get();
         return view('menus.edit', ['menu' => $menu = Menu::getSingleMenu($id), 'parents' => $parents, 'roles' => $roles]);
     }
 
