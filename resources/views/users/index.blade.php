@@ -6,19 +6,19 @@
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-header">
-                        <b>Roles List</b>
+                        <b>Users List</b>
                     </div>
 
                     <div class="card-body">
                         <p>
-                            <a href="{{ route('roles.create') }}">Create New Role</a>
+                            <a href="{{ route('register') }}">Create New User</a>
                         </p>
-                        @forelse ($roles as $role)
+                        @forelse ($users as $user)
                             <p>
-                            <a href="{{ route('roles.show', ['role' => $role->role_name]) }}"> {{ $role->role_name }} </a>
+                            <a href="{{ route('users.show', ['user' => $user->id]) }}"> {{ $user->name }} </a>
                             </p>
                         @empty
-                            No Roles!
+                            No Users!
                         @endforelse
                     </div>
                 </div>

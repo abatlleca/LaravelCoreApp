@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Role;
 use Illuminate\Http\Request;
 use App\User;
+use App\Http\Requests\StoreUser;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
@@ -25,7 +27,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::orderby('name')->get();
+
+        return view('users.index', ['users' => $users]);
     }
 
     /**
@@ -36,7 +40,9 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        return view('users.show', ['user' => $user]);
     }
 
     /**
@@ -47,19 +53,31 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $roles = Role::orderby('role_name')
+            ->get();
+
+        return view('users.edit', ['user' => $user, 'roles' => $roles]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  App\Http\Requests\StoreUser  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreUser $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $validateData = $request->validated();
+
+        $user->fill($validateData);
+        $user->save();
+
+        //Add flash message to print the menu has been edited
+        $request->session()->flash('status', 'User Edited');
+        return redirect()->route('users.show', ['user' => $user->id]);
     }
 
     /**

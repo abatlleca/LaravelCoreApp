@@ -26,8 +26,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-//        dd(Role::all());
-        return view('roles.index', ['roles' => Role::all()]);
+        $roles = Role::orderby('role_name')->get();
+        return view('roles.index', ['roles' => $roles]);
     }
 
     /**
@@ -70,7 +70,6 @@ class RoleController extends Controller
     public function show($id)
     {
         return view('roles.show', ['role' => Role::findOrFail($id)]);
-//        dd(Role::find($id));
     }
 
     /**

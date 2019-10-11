@@ -34,7 +34,7 @@ Route::group([
 
 //CUSTOMER routes
 Route::group([
-
+    'middleware' => ['auth'],
 ], function(){
     Route::resource('/customers', 'CustomerController')->except(['destroy']);
 });
