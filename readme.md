@@ -1,23 +1,29 @@
-##Windows users:
-- Download wamp: http://www.wampserver.com/en/
-- Download and extract cmder mini: https://github.com/cmderdev/cmder/releases/download/v1.1.4.1/cmder_mini.zip
-- Update windows environment variable path to point to your php install folder (inside wamp installation dir) (here is how you can do this http://stackoverflow.com/questions/17727436/how-to-properly-set-php-environment-variable-to-run-commands-in-git-bash)
- 
+##LaravelCoreApp
+This application is a Base project with some functionalities that are common in all projects like:
+- User autentication with private registration
+- Permission Roles for users (mainly ADMIN and CUSTOMER)
+- Dynamic menus generation in the TobBar
+- CRUD sections for Roles, Users, Menus
+- Seed adds 2 users:
+  - `admin@admin.net` as ADMIN - password `password`
+  - `customer@admin.net` as CUSTOMER - password `password`
 
-cmder will be refered as console
-
-##Mac Os, Ubuntu and windows users continue here:
-- Create a database locally named `homestead` utf8_general_ci 
-- Download composer https://getcomposer.org/download/
-- Pull Laravel/php project from git provider.
-- Rename `.env.example` file to `.env`inside your project root and fill the database information.
-  (windows wont let you do it, so you have to open your console cd your project root directory and run `mv .env.example .env` )
+##Installation:
+- An Apache + PHP + Mysql environment is needed (or similar)
+- Install last Composer version https://getcomposer.org/download/ 
+- Install NodeJS from https://nodejs.org/
+- Create a new database with utf8mb4_unicode_ci 
+- Create a user with permissions to interact with the new database
+- Download or Clone the Git repository https://github.com/abatlleca/LaravelCoreApp
+- Copy and rename `.env.example` file to `.env` inside your project root 
+- Fill the database information inside `.env`
 - Open the console and cd your project root directory
-- Run `composer install` or ```php composer.phar install```
-- Run `php artisan key:generate` 
-- Run `php artisan migrate`
-- Run `php artisan db:seed` to run seeders, if any.
-- Run `php artisan serve`
+- Run `composer install` or ```php composer.phar install``` to install the `vendor` files
+- Run `php artisan key:generate` to create the secret key for the project
+- Run `php artisan migrate` to create the tables
+- Run `php artisan db:seed` to run seeders, if any
+- Run `npm run dev` to create the public JS and CSS files
+- Run `php artisan serve` to serve the project to Apache (default port 8000). Optional add `--port=8080`
 - Open `httpd-vhosts.conf` file of Apache → <apache_folder>\conf\extra
 - Add VirtualHost for the project
 
@@ -32,11 +38,22 @@ cmder will be refered as console
   	</Directory>
   </VirtualHost>
   ```
-  (In Windows)
-  Open `hosts` file (C:\Windows\system32\drivers\etc\)
+  Open `hosts` file
+   
+  (In Windows) C:\Windows\system32\drivers\etc\
+  (Linux and Mac OS) /etc/hosts
+  
   Add new line `127.0.0.1 <desiredURL>`
-#####You can now access your project at `<desiredURL>:8000` :)
+#####You can now access your project at `<desiredURL>:8000` 
 
-## If for some reason your project stop working do these:
+#### If for some reason your project stop working do these:
 - `composer install`
-- `php artisan migrate`
+- `php artisan migrate:refresh --seed`
+
+####-- TODO --
+- Improve the frontend
+- Customer options
+- User profile
+- Disable/Enable menus
+- Disable/Enable users
+- Reset password from Admin panel
