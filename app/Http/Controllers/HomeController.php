@@ -30,4 +30,7 @@ class HomeController extends Controller
         return view('contact');
     }
 
+    public function denied(){
+        return view('errors.denied');
+    }
 }

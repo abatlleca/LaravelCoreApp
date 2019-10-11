@@ -1,5 +1,5 @@
 {{--{{ dd($item) }}--}}
-@if ($item['role_name'] == Auth::user()->role_name || $item['role_name'] == "ALL")
+@if (Auth::user()->hasRole($item['role_name']) || $item['role_name'] == "ALL")
     @if ($item['submenu'] == [])
         <li>
             <a class="nav-link" href="

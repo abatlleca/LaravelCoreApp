@@ -21,14 +21,14 @@ class MenusTableSeeder extends Seeder
         ]);
 
         factory(Menu::class)->create([
-            'name' => 'List',
+            'name' => 'Menu List',
             'route' => 'menus.index',
             'parent_id' => $m1->id,
             'order' => 0,
             'role_name' => 'ADMIN',
         ]);
         factory(Menu::class)->create([
-            'name' => 'Create New',
+            'name' => 'Create Menu',
             'route' => 'menus.create',
             'parent_id' => $m1->id,
             'order' => 1,
@@ -44,7 +44,7 @@ class MenusTableSeeder extends Seeder
         ]);
 
         factory(Menu::class)->create([
-            'name' => 'List',
+            'name' => 'Role List',
             'route' => 'roles.index',
             'parent_id' => $m2->id,
             'order' => 0,
@@ -52,18 +52,34 @@ class MenusTableSeeder extends Seeder
         ]);
 
         factory(Menu::class)->create([
-            'name' => 'Create New',
+            'name' => 'Create Role',
             'route' => 'roles.create',
             'parent_id' => $m2->id,
             'order' => 1,
             'role_name' => 'ADMIN',
         ]);
 
-        factory(Menu::class)->create([
+        $m3 = factory(Menu::class)->create([
             'name' => 'Users',
             'route' => '',
             'parent_id' => 0,
             'order' => 2,
+            'role_name' => 'ADMIN',
+        ]);
+
+        factory(Menu::class)->create([
+            'name' => 'Users List',
+            'route' => 'users.index',
+            'parent_id' => $m3->id,
+            'order' => 0,
+            'role_name' => 'ADMIN',
+        ]);
+
+        factory(Menu::class)->create([
+            'name' => 'Create User',
+            'route' => 'register',
+            'parent_id' => $m3->id,
+            'order' => 1,
             'role_name' => 'ADMIN',
         ]);
 

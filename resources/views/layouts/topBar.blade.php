@@ -14,17 +14,29 @@
             </ul>
 
             <!-- Right Side Of Navbar -->
-
-{{--            <ul class="navbar-nav ml-auto">--}}
-            <nav class="navbar navbar-default">
-                <div class="container-fluid">
-                    <div class="collapse navbar-collapse">
-                        <ul class="nav navbar-nav">
-                            @include('layouts.menus')
-                        </ul>
-                    </div>
-                </div>
-            </nav>
+                @guest
+                <ul class="navbar-nav ml-auto">
+                    <!-- Authentication Links -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                    </li>
+{{--                    @if (Route::has('register'))--}}
+{{--                        <li class="nav-item">--}}
+{{--                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>--}}
+{{--                        </li>--}}
+{{--                    @endif--}}
+                </ul>
+                @else
+                    <nav class="navbar navbar-default">
+                        <div class="container-fluid">
+                            <div class="collapse navbar-collapse">
+                                <ul class="nav navbar-nav">
+                                    @include('layouts.menus')
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                @endguest
         </div>
     </div>
 </nav>
