@@ -1,4 +1,4 @@
-##LaravelCoreApp
+## LaravelCoreApp
 This application is a Base project with some functionalities that are common in all projects like:
 - User autentication with private registration
 - Permission Roles for users (mainly ADMIN and CUSTOMER)
@@ -8,7 +8,7 @@ This application is a Base project with some functionalities that are common in 
   - `admin@admin.net` as ADMIN - password `password`
   - `customer@admin.net` as CUSTOMER - password `password`
 
-##Installation:
+## Installation:
 - An Apache + PHP + Mysql environment is needed (or similar)
 - Install last Composer version https://getcomposer.org/download/ 
 - Install NodeJS from https://nodejs.org/
@@ -44,13 +44,14 @@ This application is a Base project with some functionalities that are common in 
   (Linux and Mac OS) /etc/hosts
   
   Add new line `127.0.0.1 <desiredURL>`
-#####You can now access your project at `<desiredURL>:8000` 
+
+##### You can now access your project at `<desiredURL>:8000` 
 
 #### If for some reason your project stop working do these:
 - `composer install`
 - `php artisan migrate:refresh --seed`
 
-####-- TODO --
+#### -- TODO --
 - Improve the frontend
 - Customer options
 - User profile
