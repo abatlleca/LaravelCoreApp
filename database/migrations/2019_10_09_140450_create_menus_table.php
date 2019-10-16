@@ -20,7 +20,7 @@ class CreateMenusTable extends Migration
             $table->string('route')->nullable();
             $table->string('icon')->nullable();
             $table->smallInteger('order')->default(0);
-            $table->boolean('enabled')->default(1);
+            $table->boolean('isActive')->default(1);
             $table->unsignedBigInteger('parent_id')->default(0);
 
             $table->string('role_name')->index();

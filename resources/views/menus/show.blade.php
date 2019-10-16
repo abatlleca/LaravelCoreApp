@@ -31,6 +31,7 @@
                                 No parent
                             @endif
                         <p>Role Required: {{ $menu->role_name }} </p>
+                        <p>Enabled: {{ ($menu->isActive == 1) ? 'Yes' : 'No' }}</p>
 
                         <ul>Submenus:
                         @forelse($menu->submenus as $submenu)
@@ -39,6 +40,7 @@
                                 No Submenus
                         @endforelse
                         </ul>
+                        <p><a href="{{ route('menus.create', ['parent' => $menu->id]) }}">Create Submenu</a> </p>
 
                     </div>
                 </div>

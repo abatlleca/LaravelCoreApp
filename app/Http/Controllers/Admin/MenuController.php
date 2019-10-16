@@ -37,14 +37,18 @@ class MenuController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($parent_id = 0)
     {
+        $menu = new Menu();
+        $menu->parent_id = $parent_id;
+        $menu->isActive = 1;
+
         $parents = Menu::orderby('order')
             ->orderby('name')
             ->get();
         $roles = Role::orderby('role_name')
             ->get();
-        return view('menus.create', ['parents' => $parents, 'roles' => $roles]);
+        return view('menus.create', ['parents' => $parents, 'roles' => $roles, 'menu' => $menu]);
     }
 
     /**
@@ -85,12 +89,13 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
+        $menu = Menu::getSingleMenu($id);
         $parents = Menu::orderby('order')
             ->orderby('name')
             ->get();
         $roles = Role::orderby('role_name')
             ->get();
-        return view('menus.edit', ['menu' => $menu = Menu::getSingleMenu($id), 'parents' => $parents, 'roles' => $roles]);
+        return view('menus.edit', ['menu' => $menu, 'parents' => $parents, 'roles' => $roles]);
     }
 
     /**

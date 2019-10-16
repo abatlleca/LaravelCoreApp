@@ -14,6 +14,7 @@ class Menu extends Model
         'icon',
         'order',
         'role_name',
+        'isActive',
     ];
 
     public $parent;
@@ -69,7 +70,7 @@ class Menu extends Model
     }
     public function optionsMenu()
     {
-        return $this->where('enabled', 1)
+        return $this->where('isActive', 1)
             ->orderby('parent_id')
             ->orderby('order')
             ->orderby('name')

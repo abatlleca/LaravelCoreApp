@@ -25,8 +25,9 @@ class StoreUser extends FormRequest
     {
         return [
             'name' => 'bail|required|string|max:255|min:3',
-            'email' => 'bail|required|string|email|unique:users',
+            'email' => 'bail|required|string|email|unique:users,email,'.$this->user,
             'role_name' => 'bail|required|string|exists:roles',
+            'isActive' => 'bail|required|boolean',
         ];
     }
 }
