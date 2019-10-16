@@ -13,5 +13,6 @@ $factory->define(Menu::class, function (Faker $faker) {
         'parent_id' => 0,
         'order' => $faker->numberBetween(0, 10),
         'role_name' => $faker->word,
+        'isActive' => 1,
     ];
 });

@@ -6,8 +6,8 @@
 
         @error('name')
         <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+            <strong>{{ $message }}</strong>
+        </span>
         @enderror
     </div>
 </div>
@@ -37,6 +37,21 @@
                 >{{ $role->role_name }}</option>
             @endforeach
         </select>
+    </div>
+</div>
+
+<div class="form-group row">
+    <input type="hidden" name="isActive" value="0">
+    <label for="isActive" class="col-md-4 col-form-label text-md-right">Is Active</label>
+
+    <div class="col-md-6">
+        <input id="isActive" type="checkbox" name="isActive" value="1" {{ in_array (1, [old('isActive'), $user->isActive] ) ? 'checked' : ''}} >
+
+        @error('isActive')
+        <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+        </span>
+        @enderror
     </div>
 </div>
 

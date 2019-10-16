@@ -16,6 +16,7 @@
                         <p>Name: {{ $user->name }} </p>
                         <p>Email: {{ $user->email }}</p>
                         <p>Role: {{ $user->role_name }}</p>
+                        <p>Is Active: {{ ($user->isActive == 1) ? 'Yes' : 'No' }}</p>
                         <p><a href="{{ route('users.edit', ['user' => $user->id]) }}">Edit</a> </p>
 
                     </div>

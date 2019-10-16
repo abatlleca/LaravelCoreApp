@@ -14,7 +14,11 @@
 
                             @include('menus._form')
 
-                            <button type="submit">Edit</button>
+                            <div class="form-group row d-flex justify-content-center">
+                                <div class="col-md-auto ">
+                                    <button type="submit" class="btn btn-primary">Edit</button>
+                                </div>
+                            </div>
                         </form>
 
                     </div>

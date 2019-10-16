@@ -29,6 +29,7 @@ Route::group([
 ], function(){
     Route::resource('/roles', 'RoleController')->except(['destroy']);
     Route::resource('/menus', 'MenuController')->except(['destroy']);
+    Route::get('/menus/create/{parent?}', 'MenuController@create')->name('menus.create');
     Route::resource('/users', 'UserController')->only(['index', 'show', 'edit', 'update']);
 });
 

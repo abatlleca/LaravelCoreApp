@@ -29,6 +29,7 @@ class StoreMenu extends FormRequest
             'order' => 'bail|required|numeric',
             'parent_id' => 'required|numeric',
             'role_name' => 'bail|required|string|exists:roles',
+            'isActive' => 'bail|required|boolean',
         ];
     }
 }
