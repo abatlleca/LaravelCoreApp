@@ -15,8 +15,8 @@ class AddFkToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //Foreign keys for users
-            $table->string('role_name')->nullable()->index()->default('CUSTOMER');
-            $table->foreign('role_name')->references('role_name')->on('roles');
+//            $table->string('role_name')->nullable()->index()->default('CUSTOMER');
+//            $table->foreign('role_name')->references('role_name')->on('roles');
 
             $table->unsignedBigInteger('customer_id')->nullable()->index();
             $table->foreign('customer_id')->references('id')->on('customers');

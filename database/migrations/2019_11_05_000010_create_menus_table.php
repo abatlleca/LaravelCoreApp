@@ -23,8 +23,8 @@ class CreateMenusTable extends Migration
             $table->boolean('isActive')->default(1);
             $table->unsignedBigInteger('parent_id')->default(0);
 
-            $table->string('role_name')->index();
-            $table->foreign('role_name')->references('role_name')->on('roles');
+//            $table->string('role_name')->index();
+//            $table->foreign('role_name')->references('role_name')->on('roles');
         });
     }
 

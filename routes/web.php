@@ -17,9 +17,14 @@
 
 Auth::routes();
 
+//ALL routes
+Route::group([
+    'middleware' => ['auth'],
+], function(){
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/contact', 'HomeController@contact')->name('contact');
 Route::get('/denied', 'HomeController@denied')->name('denied');
+});
 
 //ADMIN routes
 Route::group([
