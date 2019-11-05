@@ -5,8 +5,11 @@
 use App\Role;
 use Faker\Generator as Faker;
 
+/**
+ * Not needed
+ */
 $factory->define(Role::class, function (Faker $faker) {
     return [
-        'role_name' => $faker->word,
+        //'role_name' => $faker->word,
     ];
 });
