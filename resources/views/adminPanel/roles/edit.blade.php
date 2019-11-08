@@ -12,7 +12,7 @@
                             @csrf
                             @method('PUT')
 
-                            @include('roles._form')
+                            @include('adminPanel.roles._form')
 
                             <button type="submit">Edit</button>
                         </form>

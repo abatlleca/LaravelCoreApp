@@ -27,7 +27,7 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::orderby('role_name')->get();
-        return view('roles.index', ['roles' => $roles]);
+        return view('adminPanel.roles.index', ['roles' => $roles]);
     }
 
     /**
@@ -37,7 +37,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('roles.create');
+        return view('adminPanel.roles.create');
     }
 
     /**
@@ -58,7 +58,7 @@ class RoleController extends Controller
         //Add flash message to print the role has been created
         $request->session()->flash('status', 'Role Created');
 
-        return redirect()->route('roles.show', ['role_name' => $role->role_name]);
+        return redirect()->route('adminPanel.roles.show', ['role_name' => $role->role_name]);
     }
 
     /**
@@ -69,7 +69,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        return view('roles.show', ['role' => Role::findOrFail($id)]);
+        return view('adminPanel.roles.show', ['role' => Role::findOrFail($id)]);
     }
 
     /**
@@ -80,7 +80,7 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        return view('roles.edit', ['role' => Role::findOrFail($id)]);
+        return view('adminPanel.roles.edit', ['role' => Role::findOrFail($id)]);
     }
 
     /**
@@ -101,7 +101,7 @@ class RoleController extends Controller
         //Add flash message to print the role has been edited
         $request->session()->flash('status', 'Role Edited');
 
-        return redirect()->route('roles.show', ['role_name' => $role->role_name]);
+        return redirect()->route('adminPanel.roles.show', ['role_name' => $role->role_name]);
     }
 
     /**

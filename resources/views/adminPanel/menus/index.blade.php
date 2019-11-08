@@ -16,7 +16,7 @@
                         <ul>
 
                         @forelse ($menus as $menu)
-                            @include('menus.partials.menu-item', ['item' => $menu])
+                            @include('adminPanel.menus.partials.menu-item', ['item' => $menu])
                         @empty
                             No Menus!
                         @endforelse

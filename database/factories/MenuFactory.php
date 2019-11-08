@@ -12,7 +12,9 @@ $factory->define(Menu::class, function (Faker $faker) {
         'route' => $faker->word,
         'parent_id' => 0,
         'order' => $faker->numberBetween(0, 10),
-        'role_name' => $faker->word,
+        'role' => '',
+        'environment' => 'all',
+        'permission' => '',
         'isActive' => 1,
     ];
 });

@@ -2,19 +2,24 @@
 
 namespace App;
 
-
+use App\MagicDoor\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
+    use HasRoles;
+
     protected $fillable = [
         'parent_id',
         'name',
         'route',
         'icon',
         'order',
-        'role_name',
+        'permission',
         'isActive',
+        'environment',
+        'role',
+        'permission',
     ];
 
     public $parent;
@@ -34,10 +39,10 @@ class Menu extends Model
     }
 
     /**
-     * @return mixed
+     *
      */
-    public function getSubmenus(){
-        return $this->where('parent_id', $this->id)
+    public function submenus(){
+        $this->submenus = $this->where('parent_id', $this->id)
             ->orderby('order')
             ->orderby('name')
             ->get();
@@ -62,7 +67,7 @@ class Menu extends Model
             ->orderby('name')
             ->get();
         foreach ($allMenus as $singleMenu){
-            $singleMenu->submenus = $singleMenu->getSubmenus();
+            $singleMenu->submenus();
         }
 
         return $allMenus;
@@ -83,6 +88,7 @@ class Menu extends Model
     public function optionsMenu()
     {
         return $this->where('isActive', 1)
+            ->where('environment', session('environment'))
             ->orderby('parent_id')
             ->orderby('order')
             ->orderby('name')
@@ -97,13 +103,15 @@ class Menu extends Model
     public static function menus()
     {
         $menus = new Menu();
-        $data = $menus->optionsMenu();
         $menuAll = [];
-        foreach ($data as $line) {
-            $item = [ array_merge($line, ['submenu' => $menus->getChildren($data, $line) ]) ];
-            $menuAll = array_merge($menuAll, $item);
+        if (session()->exists('environment')) {
+            $data = $menus->optionsMenu();
+            foreach ($data as $line) {
+                $item = [array_merge($line, ['submenu' => $menus->getChildren($data, $line)])];
+                $menuAll = array_merge($menuAll, $item);
+            }
         }
-        return $menus->menuAll = $menuAll;
+        return $menuAll;
     }
 
     /**

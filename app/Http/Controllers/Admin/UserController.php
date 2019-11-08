@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Role;
 use Illuminate\Http\Request;
+
 use App\User;
+use App\MagicDoor\Models\Role;
+use App\MagicDoor\Models\Permission;
+
 use App\Http\Requests\StoreUser;
 use App\Http\Controllers\Controller;
 
@@ -29,7 +32,7 @@ class UserController extends Controller
     {
         $users = User::orderby('name')->get();
 
-        return view('users.index', ['users' => $users]);
+        return view('adminPanel.users.index', ['users' => $users]);
     }
 
     /**
@@ -42,7 +45,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        return view('users.show', ['user' => $user]);
+        return view('adminPanel.users.show', ['user' => $user]);
     }
 
     /**
@@ -57,7 +60,7 @@ class UserController extends Controller
         $roles = Role::orderby('role_name')
             ->get();
 
-        return view('users.edit', ['user' => $user, 'roles' => $roles]);
+        return view('adminPanel.users.edit', ['user' => $user, 'roles' => $roles]);
     }
 
     /**
@@ -77,7 +80,7 @@ class UserController extends Controller
 
         //Add flash message to print the menu has been edited
         $request->session()->flash('status', 'User Edited');
-        return redirect()->route('users.show', ['user' => $user->id]);
+        return redirect()->route('adminPanel.users.show', ['user' => $user->id]);
     }
 
     /**

@@ -2,10 +2,11 @@
 
 namespace App\Http\Middleware;
 
+use App\Menu;
 use Closure;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\View;
 
-class IsAdmin
+class GenerateMenus
 {
     /**
      * Handle an incoming request.
@@ -16,10 +17,7 @@ class IsAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->hasRole('admin-panel')){
-            return $next($request);
-        }else{
-            return redirect('/denied');
-        }
+        View::share('menus_list', Menu::menus());
+        return $next($request);
     }
 }

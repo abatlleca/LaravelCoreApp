@@ -12,7 +12,7 @@
                             @csrf
                             @method('PUT')
 
-                            @include('menus._form')
+                            @include('adminPanel.menus._form')
 
                             <div class="form-group row d-flex justify-content-center">
                                 <div class="col-md-auto ">

@@ -16,11 +16,11 @@ class PermissionServiceProvider extends ServiceProvider
     {
         if (isNotLumen()) {
             $this->publishes([
-                __DIR__.'/../config/permission.php' => config_path('permission.php'),
+                __DIR__.'/config/magicdoor.php' => config_path('magicdoor.php'),
             ], 'config');
-            $this->publishes([
-                __DIR__.'/../database/migrations/create_permission_tables.php.stub' => $this->getMigrationFileName($filesystem),
-            ], 'migrations');
+//            $this->publishes([
+//                __DIR__.'/../database/migrations/create_permission_tables.php.stub' => $this->getMigrationFileName($filesystem),
+//            ], 'migrations');
             $this->registerMacroHelpers();
         }
         if ($this->app->runningInConsole()) {
@@ -41,7 +41,7 @@ class PermissionServiceProvider extends ServiceProvider
     {
         if (isNotLumen()) {
             $this->mergeConfigFrom(
-                __DIR__.'/../config/permission.php',
+                __DIR__.'/config/magicdoor.php',
                 'permission'
             );
         }

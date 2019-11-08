@@ -17,6 +17,7 @@ class Role extends Model implements RoleContract
 {
     use HasPermissions;
     use RefreshesPermissionCache;
+
     protected $guarded = ['id'];
     public function __construct(array $attributes = [])
     {
@@ -66,9 +67,9 @@ class Role extends Model implements RoleContract
      * @param string $name
      * @param string|null $guardName
      *
-     * @return \Spatie\Permission\Contracts\Role|\Spatie\Permission\Models\Role
+     * @return App\MagicDoor\Contracts\Role|App\MagicDoor\Models\Role
      *
-     * @throws \Spatie\Permission\Exceptions\RoleDoesNotExist
+     * @throws App\MagicDoor\Exceptions\RoleDoesNotExist
      */
     public static function findByName(string $name, $guardName = null): RoleContract
     {
@@ -94,7 +95,7 @@ class Role extends Model implements RoleContract
      * @param string $name
      * @param string|null $guardName
      *
-     * @return \Spatie\Permission\Contracts\Role
+     * @return App\MagicDoor\Contracts\Role
      */
     public static function findOrCreate(string $name, $guardName = null): RoleContract
     {
@@ -112,7 +113,7 @@ class Role extends Model implements RoleContract
      *
      * @return bool
      *
-     * @throws \Spatie\Permission\Exceptions\GuardDoesNotMatch
+     * @throws App\MagicDoor\Exceptions\GuardDoesNotMatch
      */
     public function hasPermissionTo($permission): bool
     {

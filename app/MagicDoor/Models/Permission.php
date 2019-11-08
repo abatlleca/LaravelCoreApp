@@ -68,9 +68,9 @@ class Permission extends Model implements PermissionContract
      * @param string $name
      * @param string|null $guardName
      *
-     * @throws \Spatie\Permission\Exceptions\PermissionDoesNotExist
+     * @throws App\MagicDoor\Exceptions\PermissionDoesNotExist
      *
-     * @return \Spatie\Permission\Contracts\Permission
+     * @return App\MagicDoor\Contracts\Permission
      */
     public static function findByName(string $name, $guardName = null): PermissionContract
     {
@@ -87,9 +87,9 @@ class Permission extends Model implements PermissionContract
      * @param int $id
      * @param string|null $guardName
      *
-     * @throws \Spatie\Permission\Exceptions\PermissionDoesNotExist
+     * @throws App\MagicDoor\Exceptions\PermissionDoesNotExist
      *
-     * @return \Spatie\Permission\Contracts\Permission
+     * @return App\MagicDoor\Contracts\Permission
      */
     public static function findById(int $id, $guardName = null): PermissionContract
     {
@@ -106,7 +106,7 @@ class Permission extends Model implements PermissionContract
      * @param string $name
      * @param string|null $guardName
      *
-     * @return \Spatie\Permission\Contracts\Permission
+     * @return App\MagicDoor\Contracts\Permission
      */
     public static function findOrCreate(string $name, $guardName = null): PermissionContract
     {

@@ -11,7 +11,7 @@
                 @if ($submenu->getSubmenus() == [])
                     <li><a href="{{ route('menus.show', ['menu' => $submenu->id]) }}">{{ $submenu->name }} </a></li>
                 @else
-                    @include('menus.partials.menu-item', [ 'item' => $submenu ])
+                    @include('adminPanel.menus.partials.menu-item', [ 'item' => $submenu ])
                 @endif
             @endforeach
         </ul>

@@ -5,12 +5,12 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header"> Create Menu: </div>
+                    <div class="card-header"> Create Role: </div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('menus.store') }}">
+                        <form method="POST" action="{{ route('roles.store') }}">
                             @csrf
-                            @include('menus._form')
+                            @include('adminPanel.roles._form')
                             <button type="submit">Create</button>
                         </form>
 

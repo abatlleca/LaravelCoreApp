@@ -5,16 +5,13 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header"> Edit User: {{ $user->name }}</div>
+                    <div class="card-header"> Create Menu: </div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('users.update', ['user' => $user->id]) }}">
+                        <form method="POST" action="{{ route('menus.store') }}">
                             @csrf
-                            @method('PUT')
-
-                            @include('users._form')
-
-                            <button type="submit">Edit</button>
+                            @include('adminPanel.menus._form')
+                            <button type="submit">Create</button>
                         </form>
 
                     </div>

@@ -5,13 +5,16 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header"> Create Role: </div>
+                    <div class="card-header"> Edit User: {{ $user->name }}</div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('roles.store') }}">
+                        <form method="POST" action="{{ route('users.update', ['user' => $user->id]) }}">
                             @csrf
-                            @include('roles._form')
-                            <button type="submit">Create</button>
+                            @method('PUT')
+
+                            @include('adminPanel.users._form')
+
+                            <button type="submit">Edit</button>
                         </form>
 
                     </div>

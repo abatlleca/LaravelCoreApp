@@ -19,7 +19,7 @@ Auth::routes();
 
 //ALL routes
 Route::group([
-    'middleware' => ['auth'],
+    'middleware' => ['auth', 'generate_menus'],
 ], function(){
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/contact', 'HomeController@contact')->name('contact');
@@ -28,7 +28,7 @@ Route::get('/denied', 'HomeController@denied')->name('denied');
 
 //ADMIN routes
 Route::group([
-    'middleware' => ['auth', 'isAdmin'],
+    'middleware' => ['auth', 'isAdmin', 'role:admin-panel', 'generate_menus'],
     'prefix' => 'admin',
     'namespace' => 'Admin',
 ], function(){
@@ -40,7 +40,7 @@ Route::group([
 
 //CUSTOMER routes
 Route::group([
-    'middleware' => ['auth'],
+    'middleware' => ['auth', 'role:customer-panel', 'generate_menus'],
 ], function(){
     Route::resource('/customers', 'CustomerController')->except(['destroy']);
 });

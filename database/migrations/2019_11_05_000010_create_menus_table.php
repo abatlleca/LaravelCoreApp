@@ -22,9 +22,9 @@ class CreateMenusTable extends Migration
             $table->smallInteger('order')->default(0);
             $table->boolean('isActive')->default(1);
             $table->unsignedBigInteger('parent_id')->default(0);
-
-//            $table->string('role_name')->index();
-//            $table->foreign('role_name')->references('role_name')->on('roles');
+            $table->string('environment')->nullable();
+            $table->string('role')->nullable();
+            $table->string('permission')->nullable();
         });
     }
 

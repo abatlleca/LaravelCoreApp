@@ -29,7 +29,7 @@ class MenuController extends Controller
     {
         $menus = Menu::getAllMenus();
 
-        return view('menus.index', ['menus' => $menus]);
+        return view('adminPanel.menus.index', ['menus' => $menus]);
     }
 
     /**
@@ -48,7 +48,7 @@ class MenuController extends Controller
             ->get();
         $roles = Role::orderby('role_name')
             ->get();
-        return view('menus.create', ['parents' => $parents, 'roles' => $roles, 'menu' => $menu]);
+        return view('adminPanel.menus.create', ['parents' => $parents, 'roles' => $roles, 'menu' => $menu]);
     }
 
     /**
@@ -65,7 +65,7 @@ class MenuController extends Controller
 
         $request->session()->flash('status', 'New Menu Created');
 
-        return redirect()->route('menus.show', ['menu' => $newMenu->id]);
+        return redirect()->route('adminPanel.menus.show', ['menu' => $newMenu->id]);
     }
 
     /**
@@ -78,7 +78,7 @@ class MenuController extends Controller
     {
         $menu = Menu::getSingleMenu($id);
 
-        return view('menus.show', ['menu' => $menu]);
+        return view('adminPanel.menus.show', ['menu' => $menu]);
     }
 
     /**
@@ -95,7 +95,7 @@ class MenuController extends Controller
             ->get();
         $roles = Role::orderby('role_name')
             ->get();
-        return view('menus.edit', ['menu' => $menu, 'parents' => $parents, 'roles' => $roles]);
+        return view('adminPanel.menus.edit', ['menu' => $menu, 'parents' => $parents, 'roles' => $roles]);
     }
 
     /**
@@ -115,7 +115,7 @@ class MenuController extends Controller
 
         //Add flash message to print the menu has been edited
         $request->session()->flash('status', 'Menu Edited');
-        return redirect()->route('menus.show', ['menu' => $menu->id]);
+        return redirect()->route('adminPanel.menus.show', ['menu' => $menu->id]);
     }
 
     /**
