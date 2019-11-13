@@ -2,13 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\MagicDoor\Models\Role;
+use App\MagicDoor\Models\Permission;
 use Faker\Generator as Faker;
 
-/**
- * Not needed
- */
-$factory->define(Role::class, function (Faker $faker) {
+$factory->define(Permission::class, function (Faker $faker) {
     return [
         'name' => $faker->word,
     ];

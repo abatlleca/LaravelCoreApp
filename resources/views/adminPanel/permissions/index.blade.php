@@ -11,14 +11,14 @@
 
                     <div class="card-body">
                         <p>
-                            <a href="{{ route('roles.create') }}">Create New Role</a>
+                            <a href="{{ route('permissions.create') }}">Create New Permission</a>
                         </p>
-                        @forelse ($roles as $role)
+                        @forelse ($permissions as $permission)
                             <p>
-                            <a href="{{ route('roles.show', ['role' => $role->id]) }}"> {{ $role->name }} </a>
+                            <a href="{{ route('permissions.show', ['permission' => $permission->id]) }}"> {{ $permission->name }} </a>
                             </p>
                         @empty
-                            No Roles!
+                            No Permissions!
                         @endforelse
                     </div>
                 </div>

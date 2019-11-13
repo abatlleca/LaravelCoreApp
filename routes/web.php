@@ -33,6 +33,7 @@ Route::group([
     'namespace' => 'Admin',
 ], function(){
     Route::resource('/roles', 'RoleController')->except(['destroy']);
+    Route::resource('/permissions', 'PermissionController')->except(['destroy']);
     Route::resource('/menus', 'MenuController')->except(['destroy']);
     Route::get('/menus/create/{parent?}', 'MenuController@create')->name('menus.create');
     Route::resource('/users', 'UserController')->only(['index', 'show', 'edit', 'update']);

@@ -5,16 +5,13 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
-                    <div class="card-header"> Edit Role: {{ $role->name }}</div>
+                    <div class="card-header"> Create Permission: </div>
 
                     <div class="card-body">
-                        <form method="POST" action="{{ route('roles.update', ['role' => $role->id]) }}">
+                        <form method="POST" action="{{ route('permissions.store') }}">
                             @csrf
-                            @method('PUT')
-
-                            @include('adminPanel.roles._form')
-
-                            <button type="submit">Edit</button>
+                            @include('adminPanel.permissions._form')
+                            <button type="submit">Create</button>
                         </form>
 
                     </div>

@@ -117,8 +117,11 @@ class Permission extends Model implements PermissionContract
         }
         return $permission;
     }
+
     /**
      * Get the current cached permissions.
+     * @param array $params
+     * @return Collection
      */
     protected static function getPermissions(array $params = []): Collection
     {

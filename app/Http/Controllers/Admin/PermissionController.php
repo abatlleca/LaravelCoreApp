@@ -1,25 +1,15 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-use App\Http\Requests\StoreRole;
+
+use App\Http\Requests\StorePermission;
 use App\MagicDoor\Models\Permission;
 use App\MagicDoor\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class RoleController extends Controller
+class PermissionController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-//        $this->middleware('auth');
-//        $this->middleware('isAdmin');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -27,8 +17,8 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::orderby('name')->get();
-        return view('adminPanel.roles.index', ['roles' => $roles]);
+        $permissions = Permission::orderby('name')->get();
+        return view('adminPanel.permissions.index', ['permissions' => $permissions]);
     }
 
     /**
@@ -38,27 +28,27 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('adminPanel.roles.create');
+        $roles = Role::orderby('name')->get();
+        return view('adminPanel.permissions.create', ['roles' => $roles]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreRole  $request
+     * @param StorePermission $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreRole $request)
+    public function store(StorePermission $request)
     {
-        //validate data
+        $role = Role::findOrFail ($request->input('role_id'));
         $validateData = $request->validated();
-
-        $role = Role::create(['name' => $validateData['name']]);
-        $role->save();
+        $permission = Permission::create(['name' => $validateData['name']]);
+        $role->syncPermissions($permission);
 
         //Add flash message to print the role has been created
-        $request->session()->flash('status', 'Role Created');
+        $request->session()->flash('status', 'Permission Created');
 
-        return redirect()->route('adminPanel.roles.show', ['id' => $role->id]);
+        return redirect()->route('adminPanel.permissions.show', ['id' => $permission->id]);
     }
 
     /**
@@ -69,7 +59,7 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        return view('adminPanel.roles.show', ['role' => Role::findById($id)]);
+        return view('adminPanel.permissions.show', ['permission' => Permission::findOrFail($id)]);
     }
 
     /**
@@ -80,29 +70,22 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
-        $permissions = Permission::orderby('name')->get();
-        return view('adminPanel.roles.edit', ['role' => Role::findById($id), 'permissions' => $permissions]);
+        return view('adminPanel.permissions.edit', ['permission' => Permission::findOrFail($id)]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  App\Http\Requests\StoreRole  $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreRole $request, $id)
+    public function update(StorePermission $request, $id)
     {
-        $role = Role::findById($id);
+        $permission = Permission::findOrFail ($id);
         $validateData = $request->validated();
 
-        $role->name($validateData['name']);
-        $role->save();
 
-        //Add flash message to print the role has been edited
-        $request->session()->flash('status', 'Role Edited');
-
-        return redirect()->route('roles.edit', ['id' => $role->id]);
     }
 
     /**

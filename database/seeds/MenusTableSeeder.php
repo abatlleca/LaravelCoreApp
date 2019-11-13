@@ -71,28 +71,57 @@ class MenusTableSeeder extends Seeder
         ]);
 
         $m3 = factory(Menu::class)->create([
-            'name' => 'Users',
+            'name' => 'Permissions',
             'route' => '',
             'parent_id' => 0,
             'order' => 2,
             'environment' => 'admin-panel',
-            'role' => 'user',
+            'role' => 'permission',
         ]);
 
         $m31 = factory(Menu::class)->create([
+            'name' => 'Permission List',
+            'route' => 'permissions.index',
+            'parent_id' => $m3->id,
+            'order' => 0,
+            'environment' => 'admin-panel',
+            'role' => 'permission',
+            'permission' => 'permission-list',
+        ]);
+
+        $m32 = factory(Menu::class)->create([
+            'name' => 'Create Permission',
+            'route' => 'permissions.create',
+            'parent_id' => $m3->id,
+            'order' => 1,
+            'environment' => 'admin-panel',
+            'role' => 'permission',
+            'permission' => 'permission-create',
+        ]);
+
+        $m4 = factory(Menu::class)->create([
+            'name' => 'Users',
+            'route' => '',
+            'parent_id' => 0,
+            'order' => 3,
+            'environment' => 'admin-panel',
+            'role' => 'user',
+        ]);
+
+        $m41 = factory(Menu::class)->create([
             'name' => 'Users List',
             'route' => 'users.index',
-            'parent_id' => $m3->id,
+            'parent_id' => $m4->id,
             'order' => 0,
             'environment' => 'admin-panel',
             'role' => 'user',
             'permission' => 'user-list',
         ]);
 
-        $m32 = factory(Menu::class)->create([
+        $m42 = factory(Menu::class)->create([
             'name' => 'Create User',
             'route' => 'register',
-            'parent_id' => $m3->id,
+            'parent_id' => $m4->id,
             'order' => 1,
             'environment' => 'admin-panel',
             'role' => 'user',

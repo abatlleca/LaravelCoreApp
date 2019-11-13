@@ -15,8 +15,23 @@
                         @endif
                         <p>Name: {{ $user->name }} </p>
                         <p>Email: {{ $user->email }}</p>
-                        <p>Role: {{ $user->role_name }}</p>
                         <p>Is Active: {{ ($user->isActive == 1) ? 'Yes' : 'No' }}</p>
+                        <p>Roles:</p>
+                            <ul>
+                                @forelse($user->roles as $role)
+                                    <li>{{ $role->name }}</li>
+                                @empty
+                                    No Roles assigned yet
+                                @endforelse
+                            </ul>
+                        <p>Permissions:</p>
+                        <ul>
+                            @forelse($user->permissions as $perm)
+                                <li>{{ $perm->name }}</li>
+                            @empty
+                                No Permissions assigned yet
+                            @endforelse
+                        </ul>
                         <p><a href="{{ route('users.edit', ['user' => $user->id]) }}">Edit</a> </p>
 
                     </div>

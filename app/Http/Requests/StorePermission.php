@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRole extends FormRequest
+class StorePermission extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class StoreRole extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'bail|required|string|max:255|min:3|unique:roles',
+            'name' => 'bail|required|string|max:255|min:3|unique:permissions,name,'.$this->input('id'),
         ];
     }
 }

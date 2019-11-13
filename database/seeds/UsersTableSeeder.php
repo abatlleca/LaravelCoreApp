@@ -54,7 +54,7 @@ class UsersTableSeeder extends Seeder
             ]
         );
 
-        $customer->assignRole('customer-panel');
+        $customer->assignRole('customer-panel', 'customer');
         $customer->syncPermissions($customer->getPermissionsViaRoles());
     }
 }

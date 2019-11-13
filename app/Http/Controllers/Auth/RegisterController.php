@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\MagicDoor\Traits\HasRoles;
+use App\MagicDoor\Models\Role;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Registered;
@@ -24,6 +26,7 @@ class RegisterController extends Controller
     */
 
     use RegistersUsers;
+    use HasRoles;
 
     /**
      * Where to redirect users after registration.
@@ -40,6 +43,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('generate_menus');
     }
 
     /**
@@ -54,7 +58,6 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role_name' => 'bail|required|string|exists:roles',
         ]);
     }
 
@@ -70,13 +73,12 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'role_name' => $data['role_name'],
         ]);
     }
 
     public function showRegistrationForm()
     {
-        $roles = Role::orderby('role_name')
+        $roles = Role::orderby('name')
             ->get();
         return view('auth.register', compact('roles'));
     }

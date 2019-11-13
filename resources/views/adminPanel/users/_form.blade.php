@@ -25,20 +25,6 @@
         @enderror
     </div>
 </div>
-<div class="form-group row">
-    <label class="col-md-4 col-form-label text-md-right">Required Role: </label>
-    <div class="col-md-6">
-        <select name="role_name">
-            @foreach($roles as $role)
-                <option value="{{ $role->role_name }}"
-                        @if (isset($user) && $user->role_name == $user->role_name)
-                        selected
-                    @endif
-                >{{ $role->role_name }}</option>
-            @endforeach
-        </select>
-    </div>
-</div>
 
 <div class="form-group row">
     <input type="hidden" name="isActive" value="0">
@@ -52,6 +38,13 @@
             <strong>{{ $message }}</strong>
         </span>
         @enderror
+    </div>
+</div>
+
+<div class="form-group row">
+    <div class="col-md-1"></div>
+    <div class="col-md-11">
+        @include('adminPanel.roles.partials.list', ['role_list' => $roles, 'user' => $user])
     </div>
 </div>
 

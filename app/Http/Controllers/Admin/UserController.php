@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 
 use App\User;
 use App\MagicDoor\Models\Role;
-use App\MagicDoor\Models\Permission;
+use App\MagicDoor\Traits\HasRoles;
 
 use App\Http\Requests\StoreUser;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+    use HasRoles;
+
     /**
      * Create a new controller instance.
      *
@@ -57,10 +59,13 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::findOrFail($id);
-        $roles = Role::orderby('role_name')
+        $roles = Role::orderby('name')
             ->get();
 
-        return view('adminPanel.users.edit', ['user' => $user, 'roles' => $roles]);
+        return view('adminPanel.users.edit',
+            ['user' => $user,
+                'roles' => $roles,
+            ]);
     }
 
     /**
@@ -72,15 +77,20 @@ class UserController extends Controller
      */
     public function update(StoreUser $request, $id)
     {
+        //dd($request);
         $user = User::findOrFail($id);
         $validateData = $request->validated();
 
         $user->fill($validateData);
         $user->save();
 
+
+        $user->syncRoles($request->input('roles'));
+        $user->syncPermissions($request->input('permissions'));
+
         //Add flash message to print the menu has been edited
         $request->session()->flash('status', 'User Edited');
-        return redirect()->route('adminPanel.users.show', ['user' => $user->id]);
+        return redirect()->route('users.show', ['user' => $user->id]);
     }
 
     /**
@@ -92,5 +102,9 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function AuthRouteAPI(Request $request){
+        return $request->user();
     }
 }
