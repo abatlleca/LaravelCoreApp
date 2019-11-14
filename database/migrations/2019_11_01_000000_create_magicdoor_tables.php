@@ -80,8 +80,8 @@ class CreateMagicDoorTables extends Migration
         });
 
         app('cache')
-            ->store(config('permission.cache.store') != 'default' ? config('permission.cache.store') : null)
-            ->forget(config('permission.cache.key'));
+            ->store(config('magicdoor.cache.store') != 'default' ? config('magicdoor.cache.store') : null)
+            ->forget(config('magicdoor.cache.key'));
     }
 
     /**
@@ -91,7 +91,7 @@ class CreateMagicDoorTables extends Migration
      */
     public function down()
     {
-        $tableNames = config('permission.table_names');
+        $tableNames = config('magicdoor.table_names');
 
         Schema::drop($tableNames['role_has_permissions']);
         Schema::drop($tableNames['model_has_roles']);

@@ -1,15 +1,10 @@
 {{--{{ dd($item) }}--}}
-@if (empty($item['role']) || auth()->user()->hasRole($item['role']))
-    @if (empty($item['permission']) || auth()->user()->can($item['permission']))
-        @if ($item['submenu'] == [])
-            <li>
-                <a class="nav-link" href="
-                @if($item['route'] != '')
-                    {{ route($item['route']) }}
-                @endif
-                ">{{ $item['name'] }}</a>
-            </li>
-        @else
+
+@if ($item['submenu'] == [])
+    @include('layouts.partials.menu-check', [ 'item' => $item, 'type' => 'single' ])
+@else
+    @if (empty($item['role']) || auth()->user()->hasRole($item['role']))
+        @if (empty($item['permission']) || auth()->user()->hasDirectPermission($item['permission']))
             <li class="dropdown">
                 <a href="#"
                    class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -18,13 +13,9 @@
                 <ul class="dropdown-menu sub-menu">
                     @foreach ($item['submenu'] as $submenu)
                         @if ($submenu['submenu'] == [])
-                            <li><a class="nav-link" href="
-                            @if($submenu['route'] != '')
-                                {{ route($submenu['route']) }}
-                            @endif
-                            ">{{ $submenu['name'] }} </a></li>
+                            @include('layouts.partials.menu-check', [ 'item' => $submenu ])
                         @else
-                            @include('partials.menu-item', [ 'item' => $submenu ])
+                            @include('layouts.partials.menu-item', [ 'item' => $submenu ])
                         @endif
                     @endforeach
                 </ul>
@@ -32,3 +23,4 @@
         @endif
     @endif
 @endif
+

@@ -39,28 +39,28 @@ class PermissionRegistrar
     public function __construct(Gate $gate, CacheManager $cacheManager)
     {
         $this->gate = $gate;
-        $this->permissionClass = config('permission.models.permission');
-        $this->roleClass = config('permission.models.role');
+        $this->permissionClass = config('magicdoor.models.permission');
+        $this->roleClass = config('magicdoor.models.role');
         $this->cacheManager = $cacheManager;
         $this->initializeCache();
     }
     protected function initializeCache()
     {
-        self::$cacheExpirationTime = config('permission.cache.expiration_time', config('permission.cache_expiration_time'));
+        self::$cacheExpirationTime = config('magicdoor.cache.expiration_time', config('magicdoor.cache_expiration_time'));
         if (app()->version() <= '5.5') {
             if (self::$cacheExpirationTime instanceof \DateInterval) {
                 $interval = self::$cacheExpirationTime;
                 self::$cacheExpirationTime = $interval->m * 30 * 60 * 24 + $interval->d * 60 * 24 + $interval->h * 60 + $interval->i;
             }
         }
-        self::$cacheKey = config('permission.cache.key');
-        self::$cacheModelKey = config('permission.cache.model_key');
+        self::$cacheKey = config('magicdoor.cache.key');
+        self::$cacheModelKey = config('magicdoor.cache.model_key');
         $this->cache = $this->getCacheStoreFromConfig();
     }
     protected function getCacheStoreFromConfig(): \Illuminate\Contracts\Cache\Repository
     {
         // the 'default' fallback here is from the permission.php config file, where 'default' means to use config(cache.default)
-        $cacheDriver = config('permission.cache.store', 'default');
+        $cacheDriver = config('magicdoor.cache.store', 'default');
         // when 'default' is specified, no action is required since we already have the default instance
         if ($cacheDriver === 'default') {
             return $this->cacheManager->store();

@@ -1,3 +1,4 @@
+{{--{{ dd(Auth::user()->hasDirectPermission('menu-list')) }}--}}
 @foreach ($menus_list as $key => $item)
     @if ($item['parent_id'] != 0)
         @break

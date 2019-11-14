@@ -23,7 +23,7 @@ class Permission extends Model implements PermissionContract
     {
         $attributes['guard_name'] = $attributes['guard_name'] ?? config('auth.defaults.guard');
         parent::__construct($attributes);
-        $this->setTable(config('permission.table_names.permissions'));
+        $this->setTable(config('magicdoor.table_names.permissions'));
     }
     public static function create(array $attributes = [])
     {
@@ -43,8 +43,8 @@ class Permission extends Model implements PermissionContract
     public function roles(): BelongsToMany
     {
         return $this->belongsToMany(
-            config('permission.models.role'),
-            config('permission.table_names.role_has_permissions'),
+            config('magicdoor.models.role'),
+            config('magicdoor.table_names.role_has_permissions'),
             'permission_id',
             'role_id'
         );
@@ -57,9 +57,9 @@ class Permission extends Model implements PermissionContract
         return $this->morphedByMany(
             getModelForGuard($this->attributes['guard_name']),
             'model',
-            config('permission.table_names.model_has_permissions'),
+            config('magicdoor.table_names.model_has_permissions'),
             'permission_id',
-            config('permission.column_names.model_morph_key')
+            config('magicdoor.column_names.model_morph_key')
         );
     }
     /**

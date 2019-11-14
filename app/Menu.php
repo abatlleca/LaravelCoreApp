@@ -32,9 +32,10 @@ class Menu extends Model
      */
     public static function getSingleMenu($id){
         $menu = Menu::findOrFail($id);
-        $menu->submenus = $menu->getSubmenus();
-        $menu->parent = $menu->getParent();
-
+        $menu->submenus();
+        if ($menu->parent_id != 0){
+            $menu->parent = Menu::findOrFail($menu->parent_id);
+        }
         return $menu;
     }
 
@@ -71,14 +72,6 @@ class Menu extends Model
         }
 
         return $allMenus;
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function role()
-    {
-        return $this->belongsTo('App\Role', 'role_name', 'role_name');
     }
 
     /**

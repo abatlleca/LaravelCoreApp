@@ -2,8 +2,10 @@
 
 namespace App\Exceptions;
 
+use App\Menu;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\View;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +48,8 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        //Added to the Views the MenuList because it bypass the middleware
+        View::share('menus_list', Menu::menus());
         return parent::render($request, $exception);
     }
 }

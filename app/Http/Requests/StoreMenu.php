@@ -28,7 +28,9 @@ class StoreMenu extends FormRequest
             'route' => 'bail|nullable|string|max:255|min:3',
             'order' => 'bail|required|numeric',
             'parent_id' => 'required|numeric',
-            'role_name' => 'bail|required|string|exists:roles',
+            'role' => 'bail|required|string|exists:roles,name',
+            'permission' => 'bail|nullable|string|exists:permissions,name',
+            'environment' => 'bail|required|string',
             'isActive' => 'bail|required|boolean',
         ];
     }

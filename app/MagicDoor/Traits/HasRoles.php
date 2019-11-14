@@ -34,10 +34,10 @@ trait HasRoles
     public function roles(): MorphToMany
     {
         return $this->morphToMany(
-            config('permission.models.role'),
+            config('magicdoor.models.role'),
             'model',
-            config('permission.table_names.model_has_roles'),
-            config('permission.column_names.model_morph_key'),
+            config('magicdoor.table_names.model_has_roles'),
+            config('magicdoor.column_names.model_morph_key'),
             'role_id'
         );
     }
@@ -69,7 +69,7 @@ trait HasRoles
         return $query->whereHas('roles', function ($query) use ($roles) {
             $query->where(function ($query) use ($roles) {
                 foreach ($roles as $role) {
-                    $query->orWhere(config('permission.table_names.roles').'.id', $role->id);
+                    $query->orWhere(config('magicdoor.table_names.roles').'.id', $role->id);
                 }
             });
         });

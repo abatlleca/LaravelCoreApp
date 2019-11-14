@@ -44,15 +44,46 @@
 </div>
 
 <div class="form-group row">
-    <label for="role_name" class="col-md-4 col-form-label text-md-right">Required Role: </label>
+    <label for="role" class="col-md-4 col-form-label text-md-right">Role: </label>
     <div class="col-md-6">
-        <select id="role_name" name="role_name">
+        <select id="role" name="role">
             @foreach($roles as $role)
-                <option value="{{ $role->role_name }}"
-                    @if (isset($menu) && $menu->role_name == $role->role_name)
+                <option value="{{ $role->name }}"
+                    @if (isset($menu) && $menu->role == $role->name)
                     selected
                     @endif
-                >{{ $role->role_name }}</option>
+                >{{ $role->name }}</option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="permission" class="col-md-4 col-form-label text-md-right">Permission: </label>
+    <div class="col-md-6">
+        <select id="permission" name="permission">
+            <option value="">Choose permission</option>
+            @foreach($permissions as $permission)
+                <option value="{{ $permission->name }}"
+                        @if (isset($menu) && $menu->permission == $permission->name)
+                        selected
+                    @endif
+                >{{ $permission->name }}</option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
+<div class="form-group row">
+    <label for="environment" class="col-md-4 col-form-label text-md-right">Environment: </label>
+    <div class="col-md-6">
+        <select id="environment" name="environment">
+            @foreach($environments as $environment)
+                <option value="{{ $environment }}"
+                        @if (isset($menu) && $menu->environment == $environment)
+                        selected
+                    @endif
+                >{{ $environment }}</option>
             @endforeach
         </select>
     </div>

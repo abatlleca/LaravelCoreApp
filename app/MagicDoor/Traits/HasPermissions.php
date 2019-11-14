@@ -36,10 +36,10 @@ trait HasPermissions
     public function permissions(): MorphToMany
     {
         return $this->morphToMany(
-            config('permission.models.permission'),
+            config('magicdoor.models.permission'),
             'model',
-            config('permission.table_names.model_has_permissions'),
-            config('permission.column_names.model_morph_key'),
+            config('magicdoor.table_names.model_has_permissions'),
+            config('magicdoor.column_names.model_morph_key'),
             'permission_id'
         );
     }
@@ -61,7 +61,7 @@ trait HasPermissions
             $query->whereHas('permissions', function ($query) use ($permissions) {
                 $query->where(function ($query) use ($permissions) {
                     foreach ($permissions as $permission) {
-                        $query->orWhere(config('permission.table_names.permissions').'.id', $permission->id);
+                        $query->orWhere(config('magicdoor.table_names.permissions').'.id', $permission->id);
                     }
                 });
             });
@@ -69,7 +69,7 @@ trait HasPermissions
                 $query->orWhereHas('roles', function ($query) use ($rolesWithPermissions) {
                     $query->where(function ($query) use ($rolesWithPermissions) {
                         foreach ($rolesWithPermissions as $role) {
-                            $query->orWhere(config('permission.table_names.roles').'.id', $role->id);
+                            $query->orWhere(config('magicdoor.table_names.roles').'.id', $role->id);
                         }
                     });
                 });

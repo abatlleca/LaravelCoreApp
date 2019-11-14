@@ -8,7 +8,11 @@
                     <div class="card-header"><b>Access Denied</b></div>
 
                     <div class="card-body">
-                        You cannot do that action
+                        @if (isset($exception))
+                            {{ $exception->getMessage() }}
+                        @else
+                            You cannot do that action
+                        @endif
                     </div>
                 </div>
             </div>
