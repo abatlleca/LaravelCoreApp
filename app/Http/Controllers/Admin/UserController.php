@@ -32,6 +32,8 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('list', \App\User::class);
+
         $users = User::orderby('name')->get();
 
         return view('adminPanel.users.index', ['users' => $users]);
@@ -45,6 +47,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        $this->authorize('show', \App\User::class);
+
         $user = User::findOrFail($id);
 
         return view('adminPanel.users.show', ['user' => $user]);
@@ -58,6 +62,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('update', \App\User::class);
+
         $user = User::findOrFail($id);
         $roles = Role::orderby('name')
             ->get();
@@ -77,7 +83,8 @@ class UserController extends Controller
      */
     public function update(StoreUser $request, $id)
     {
-        //dd($request);
+        $this->authorize('update', \App\User::class);
+
         $user = User::findOrFail($id);
         $validateData = $request->validated();
 

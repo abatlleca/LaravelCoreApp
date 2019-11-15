@@ -24,7 +24,7 @@ class StorePermission extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'bail|required|string|max:255|min:3|unique:permissions,name,'.$this->input('id'),
+            'name' => 'bail|required|string|max:255|min:3|unique:permissions,name,'.$this->permission.',id',
         ];
     }
 }

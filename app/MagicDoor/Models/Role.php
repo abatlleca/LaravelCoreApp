@@ -25,6 +25,11 @@ class Role extends Model implements RoleContract
         parent::__construct($attributes);
         $this->setTable(config('magicdoor.table_names.roles'));
     }
+
+    public function name(){
+        return $this->name;
+    }
+
     public static function create(array $attributes = [])
     {
         $attributes['guard_name'] = $attributes['guard_name'] ?? Guard::getDefaultName(static::class);

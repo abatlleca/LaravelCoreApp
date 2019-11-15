@@ -27,6 +27,8 @@ class RoleController extends Controller
      */
     public function index()
     {
+        $this->authorize('list', \App\MagicDoor\Models\Role::class);
+
         $roles = Role::orderby('name')->get();
         return view('adminPanel.roles.index', ['roles' => $roles]);
     }
@@ -38,6 +40,8 @@ class RoleController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', \App\MagicDoor\Models\Role::class);
+
         return view('adminPanel.roles.create');
     }
 
@@ -49,6 +53,8 @@ class RoleController extends Controller
      */
     public function store(StoreRole $request)
     {
+        $this->authorize('create', \App\MagicDoor\Models\Role::class);
+
         //validate data
         $validateData = $request->validated();
 
@@ -58,7 +64,7 @@ class RoleController extends Controller
         //Add flash message to print the role has been created
         $request->session()->flash('status', 'Role Created');
 
-        return redirect()->route('adminPanel.roles.show', ['id' => $role->id]);
+        return redirect()->route('roles.show', ['id' => $role->id]);
     }
 
     /**
@@ -69,6 +75,8 @@ class RoleController extends Controller
      */
     public function show($id)
     {
+        $this->authorize('show', \App\MagicDoor\Models\Role::class);
+
         return view('adminPanel.roles.show', ['role' => Role::findById($id)]);
     }
 
@@ -80,6 +88,8 @@ class RoleController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('update', \App\MagicDoor\Models\Role::class);
+
         $permissions = Permission::orderby('name')->get();
         return view('adminPanel.roles.edit', ['role' => Role::findById($id), 'permissions' => $permissions]);
     }
@@ -93,16 +103,20 @@ class RoleController extends Controller
      */
     public function update(StoreRole $request, $id)
     {
+        $this->authorize('update', \App\MagicDoor\Models\Role::class);
+
         $role = Role::findById($id);
         $validateData = $request->validated();
 
         $role->name($validateData['name']);
         $role->save();
 
+        $role->syncPermissions($request->input('permissions'));
+
         //Add flash message to print the role has been edited
         $request->session()->flash('status', 'Role Edited');
 
-        return redirect()->route('roles.edit', ['id' => $role->id]);
+        return redirect()->route('roles.show', ['id' => $role->id]);
     }
 
     /**

@@ -3,20 +3,20 @@
 namespace App\Policies;
 
 use App\User;
-use App\Menu;
+use App\MagicDoor\Models\Role;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class MenuPolicy
+class RolePolicy
 {
     use HandlesAuthorization;
 
-    protected $role = 'menu';
+    protected $role = 'role';
     protected $permission_list = [
-        'list' => 'menu-list',
-        'show' => 'menu-show',
-        'create' => 'menu-create',
-        'update' => 'menu-edit',
-        'delete' => 'menu-delete',
+        'list' => 'role-list',
+        'show' => 'role-show',
+        'create' => 'role-create',
+        'update' => 'role-edit',
+        'delete' => 'role-delete',
     ];
 
     /**
@@ -104,10 +104,10 @@ class MenuPolicy
      * Determine whether the user can restore the menu.
      *
      * @param  \App\User  $user
-     * @param  \App\Menu  $menu
+     * @param  \App\MagicDoor\Models\Role  $role
      * @return mixed
      */
-    public function restore(User $user, Menu $menu)
+    public function restore(User $user, Role $role)
     {
         //
     }
@@ -116,10 +116,10 @@ class MenuPolicy
      * Determine whether the user can permanently delete the menu.
      *
      * @param  \App\User  $user
-     * @param  \App\Menu  $menu
+     * @param  \App\MagicDoor\Models\Role  $role
      * @return mixed
      */
-    public function forceDelete(User $user, Menu $menu)
+    public function forceDelete(User $user, Role $role)
     {
         //
     }

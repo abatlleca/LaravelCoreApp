@@ -17,6 +17,8 @@ class PermissionController extends Controller
      */
     public function index()
     {
+        $this->authorize('list', \App\MagicDoor\Models\Permission::class);
+
         $permissions = Permission::orderby('name')->get();
         return view('adminPanel.permissions.index', ['permissions' => $permissions]);
     }
@@ -28,6 +30,8 @@ class PermissionController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', \App\MagicDoor\Models\Permission::class);
+
         $roles = Role::orderby('name')->get();
         return view('adminPanel.permissions.create', ['roles' => $roles]);
     }
@@ -40,6 +44,8 @@ class PermissionController extends Controller
      */
     public function store(StorePermission $request)
     {
+        $this->authorize('create', \App\MagicDoor\Models\Permission::class);
+
         $role = Role::findOrFail ($request->input('role_id'));
         $validateData = $request->validated();
         $permission = Permission::create(['name' => $validateData['name']]);
@@ -48,7 +54,7 @@ class PermissionController extends Controller
         //Add flash message to print the role has been created
         $request->session()->flash('status', 'Permission Created');
 
-        return redirect()->route('adminPanel.permissions.show', ['id' => $permission->id]);
+        return redirect()->route('permissions.show', ['id' => $permission->id]);
     }
 
     /**
@@ -59,6 +65,8 @@ class PermissionController extends Controller
      */
     public function show($id)
     {
+        $this->authorize('show', \App\MagicDoor\Models\Permission::class);
+
         return view('adminPanel.permissions.show', ['permission' => Permission::findOrFail($id)]);
     }
 
@@ -70,7 +78,13 @@ class PermissionController extends Controller
      */
     public function edit($id)
     {
-        return view('adminPanel.permissions.edit', ['permission' => Permission::findOrFail($id)]);
+        $this->authorize('update', \App\MagicDoor\Models\Permission::class);
+
+        $roles = Role::orderBy('name')->get();
+        return view('adminPanel.permissions.edit', [
+            'permission' => Permission::findOrFail($id),
+            'roles' => $roles,
+            ]);
     }
 
     /**
@@ -82,10 +96,20 @@ class PermissionController extends Controller
      */
     public function update(StorePermission $request, $id)
     {
+        $this->authorize('update', \App\MagicDoor\Models\Permission::class);
+
         $permission = Permission::findOrFail ($id);
         $validateData = $request->validated();
 
+        $permission->name($validateData['name']);
+        $permission->save();
 
+        $permission->syncRoles($request->input('roles'));
+
+        //Add flash message to print the role has been edited
+        $request->session()->flash('status', 'Permission Edited');
+
+        return redirect()->route('permissions.show', ['id' => $permission->id]);
     }
 
     /**

@@ -78,6 +78,8 @@ class RegisterController extends Controller
 
     public function showRegistrationForm()
     {
+        $this->authorize('create', \App\User::class);
+
         $roles = Role::orderby('name')
             ->get();
         return view('auth.register', compact('roles'));
@@ -91,6 +93,8 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
+        $this->authorize('create', \App\User::class);
+
         $this->validator($request->all())->validate();
 
         event(new Registered($user = $this->create($request->all())));

@@ -14,6 +14,14 @@
                             </p>
                         @endif
                         <p>Name: {{ $role->name }} </p>
+                        <p>Roles:</p>
+                        <p>
+                            <u>
+                                @foreach($role->permissions as $permission)
+                                    <li>{{ $permission->name }}</li>
+                                @endforeach
+                            </u>
+                        </p>
                         <p><a href="{{ route('roles.edit', ['role' => $role->id]) }}">Edit</a> </p>
                     </div>
                 </div>

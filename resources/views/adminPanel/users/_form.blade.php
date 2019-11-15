@@ -44,7 +44,7 @@
 <div class="form-group row">
     <div class="col-md-1"></div>
     <div class="col-md-11">
-        @include('adminPanel.roles.partials.list', ['role_list' => $roles, 'user' => $user])
+        @include('adminPanel.users.partials.list', ['role_list' => $roles, 'user' => $user])
     </div>
 </div>
 

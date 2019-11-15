@@ -3,20 +3,19 @@
 namespace App\Policies;
 
 use App\User;
-use App\Menu;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class MenuPolicy
+class UsersPolicy
 {
     use HandlesAuthorization;
 
-    protected $role = 'menu';
+    protected $role = 'user';
     protected $permission_list = [
-        'list' => 'menu-list',
-        'show' => 'menu-show',
-        'create' => 'menu-create',
-        'update' => 'menu-edit',
-        'delete' => 'menu-delete',
+        'list' => 'user-list',
+        'show' => 'user-show',
+        'create' => 'user-create',
+        'update' => 'user-edit',
+        'delete' => 'user-delete',
     ];
 
     /**
@@ -104,10 +103,10 @@ class MenuPolicy
      * Determine whether the user can restore the menu.
      *
      * @param  \App\User  $user
-     * @param  \App\Menu  $menu
+     * @param  \App\User $user1
      * @return mixed
      */
-    public function restore(User $user, Menu $menu)
+    public function restore(User $user, User $user1)
     {
         //
     }
@@ -116,10 +115,10 @@ class MenuPolicy
      * Determine whether the user can permanently delete the menu.
      *
      * @param  \App\User  $user
-     * @param  \App\Menu  $menu
+     * @param  \App\User $user1
      * @return mixed
      */
-    public function forceDelete(User $user, Menu $menu)
+    public function forceDelete(User $user, User $user1)
     {
         //
     }
