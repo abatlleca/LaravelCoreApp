@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\MagicDoor\Traits\HasRoles;
+
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,6 +11,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class User extends Authenticatable
 {
     use Notifiable;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -19,7 +22,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role_name',
         'isActive',
     ];
 
@@ -41,12 +43,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function role()
-    {
-        return $this->belongsTo('App\Role', 'role_name', 'role_name');
-    }
-
-    public function hasRole ($role){
-        return $this->role_name === $role;
-    }
 }

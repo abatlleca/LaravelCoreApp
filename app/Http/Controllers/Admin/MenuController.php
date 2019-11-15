@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\StoreMenu;
+use App\MagicDoor\Models\Permission;
 use App\Menu;
-use App\Role;
+use App\MagicDoor\Models\Role;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\App;
 
 class MenuController extends Controller
 {
+    protected $environments = ['admin-panel', 'customer-panel'];
     /**
      * Create a new controller instance.
      *
@@ -21,15 +24,16 @@ class MenuController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function index()
     {
+        $this->authorize('list', \App\Menu::class);
+
         $menus = Menu::getAllMenus();
 
-        return view('menus.index', ['menus' => $menus]);
+        return view('adminPanel.menus.index', ['menus' => $menus]);
     }
 
     /**
@@ -39,6 +43,8 @@ class MenuController extends Controller
      */
     public function create($parent_id = 0)
     {
+        $this->authorize('create', \App\Menu::class);
+
         $menu = new Menu();
         $menu->parent_id = $parent_id;
         $menu->isActive = 1;
@@ -46,9 +52,17 @@ class MenuController extends Controller
         $parents = Menu::orderby('order')
             ->orderby('name')
             ->get();
-        $roles = Role::orderby('role_name')
+        $roles = Role::orderby('name')
             ->get();
-        return view('menus.create', ['parents' => $parents, 'roles' => $roles, 'menu' => $menu]);
+        $permissions = Permission::orderby('name')
+            ->get();
+        return view('adminPanel.menus.create', [
+            'parents' => $parents,
+            'roles' => $roles,
+            'permissions' => $permissions,
+            'menu' => $menu,
+            'environments' => $this->environments,
+            ]);
     }
 
     /**
@@ -59,26 +73,31 @@ class MenuController extends Controller
      */
     public function store(StoreMenu $request)
     {
+        $this->authorize('create', \App\Menu::class);
+
         //validate data
         $validateData = $request->validated();
         $newMenu = Menu::create($validateData);
 
         $request->session()->flash('status', 'New Menu Created');
 
-        return redirect()->route('menus.show', ['menu' => $newMenu->id]);
+        return redirect()->route('adminPanel.menus.show', ['menu' => $newMenu->id]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show($id)
     {
+        $this->authorize('show', \App\Menu::class);
+
         $menu = Menu::getSingleMenu($id);
 
-        return view('menus.show', ['menu' => $menu]);
+        return view('adminPanel.menus.show', ['menu' => $menu]);
     }
 
     /**
@@ -89,13 +108,23 @@ class MenuController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('update', \App\Menu::class);
+
         $menu = Menu::getSingleMenu($id);
         $parents = Menu::orderby('order')
             ->orderby('name')
             ->get();
-        $roles = Role::orderby('role_name')
+        $roles = Role::orderby('name')
             ->get();
-        return view('menus.edit', ['menu' => $menu, 'parents' => $parents, 'roles' => $roles]);
+        $permissions = Permission::orderby('name')
+            ->get();
+        return view('adminPanel.menus.edit', [
+            'parents' => $parents,
+            'roles' => $roles,
+            'permissions' => $permissions,
+            'menu' => $menu,
+            'environments' => $this->environments,
+        ]);
     }
 
     /**
@@ -107,6 +136,8 @@ class MenuController extends Controller
      */
     public function update(StoreMenu $request, $id)
     {
+        $this->authorize('update', \App\Menu::class);
+
         $menu = Menu::findOrFail($id);
         $validateData = $request->validated();
 
@@ -115,7 +146,7 @@ class MenuController extends Controller
 
         //Add flash message to print the menu has been edited
         $request->session()->flash('status', 'Menu Edited');
-        return redirect()->route('menus.show', ['menu' => $menu->id]);
+        return redirect()->route('adminPanel.menus.show', ['menu' => $menu->id]);
     }
 
     /**

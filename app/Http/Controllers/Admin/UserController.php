@@ -2,14 +2,19 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Role;
 use Illuminate\Http\Request;
+
 use App\User;
+use App\MagicDoor\Models\Role;
+use App\MagicDoor\Traits\HasRoles;
+
 use App\Http\Requests\StoreUser;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+    use HasRoles;
+
     /**
      * Create a new controller instance.
      *
@@ -27,9 +32,11 @@ class UserController extends Controller
      */
     public function index()
     {
+        $this->authorize('list', \App\User::class);
+
         $users = User::orderby('name')->get();
 
-        return view('users.index', ['users' => $users]);
+        return view('adminPanel.users.index', ['users' => $users]);
     }
 
     /**
@@ -40,9 +47,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
+        $this->authorize('show', \App\User::class);
+
         $user = User::findOrFail($id);
 
-        return view('users.show', ['user' => $user]);
+        return view('adminPanel.users.show', ['user' => $user]);
     }
 
     /**
@@ -53,11 +62,16 @@ class UserController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('update', \App\User::class);
+
         $user = User::findOrFail($id);
-        $roles = Role::orderby('role_name')
+        $roles = Role::orderby('name')
             ->get();
 
-        return view('users.edit', ['user' => $user, 'roles' => $roles]);
+        return view('adminPanel.users.edit',
+            ['user' => $user,
+                'roles' => $roles,
+            ]);
     }
 
     /**
@@ -69,11 +83,17 @@ class UserController extends Controller
      */
     public function update(StoreUser $request, $id)
     {
+        $this->authorize('update', \App\User::class);
+
         $user = User::findOrFail($id);
         $validateData = $request->validated();
 
         $user->fill($validateData);
         $user->save();
+
+
+        $user->syncRoles($request->input('roles'));
+        $user->syncPermissions($request->input('permissions'));
 
         //Add flash message to print the menu has been edited
         $request->session()->flash('status', 'User Edited');
@@ -89,5 +109,9 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function AuthRouteAPI(Request $request){
+        return $request->user();
     }
 }

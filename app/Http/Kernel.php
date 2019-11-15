@@ -60,7 +60,11 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'role' => \App\MagicDoor\Middleware\RoleMiddleware::class,
+        'permission' => \App\MagicDoor\Middleware\PermissionMiddleware::class,
+        'role_or_permission' => \App\MagicDoor\Middleware\RoleOrPermissionMiddleware::class,
         'isAdmin' => \App\Http\Middleware\IsAdmin::class,
+        'generate_menus' => \App\Http\Middleware\GenerateMenus::class,
     ];
 
     /**
@@ -77,6 +81,10 @@ class Kernel extends HttpKernel
         \Illuminate\Session\Middleware\AuthenticateSession::class,
         \Illuminate\Routing\Middleware\SubstituteBindings::class,
         \Illuminate\Auth\Middleware\Authorize::class,
+        \App\MagicDoor\Middleware\RoleMiddleware::class,
+        \App\MagicDoor\Middleware\PermissionMiddleware::class,
+        \App\MagicDoor\Middleware\RoleOrPermissionMiddleware::class,
         \App\Http\Middleware\IsAdmin::class,
+        \App\Http\Middleware\GenerateMenus::class,
     ];
 }

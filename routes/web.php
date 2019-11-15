@@ -17,17 +17,23 @@
 
 Auth::routes();
 
+//ALL routes
+Route::group([
+    'middleware' => ['auth', 'generate_menus'],
+], function(){
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/contact', 'HomeController@contact')->name('contact');
 Route::get('/denied', 'HomeController@denied')->name('denied');
+});
 
 //ADMIN routes
 Route::group([
-    'middleware' => ['auth', 'isAdmin'],
+    'middleware' => ['auth', 'isAdmin', 'role:admin-panel', 'generate_menus'],
     'prefix' => 'admin',
     'namespace' => 'Admin',
 ], function(){
     Route::resource('/roles', 'RoleController')->except(['destroy']);
+    Route::resource('/permissions', 'PermissionController')->except(['destroy']);
     Route::resource('/menus', 'MenuController')->except(['destroy']);
     Route::get('/menus/create/{parent?}', 'MenuController@create')->name('menus.create');
     Route::resource('/users', 'UserController')->only(['index', 'show', 'edit', 'update']);
@@ -35,7 +41,7 @@ Route::group([
 
 //CUSTOMER routes
 Route::group([
-    'middleware' => ['auth'],
+    'middleware' => ['auth', 'role:customer-panel', 'generate_menus'],
 ], function(){
     Route::resource('/customers', 'CustomerController')->except(['destroy']);
 });

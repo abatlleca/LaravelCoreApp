@@ -23,8 +23,9 @@ class StoreRole extends FormRequest
      */
     public function rules()
     {
+
         return [
-            'role_name' => 'bail|required|string|max:255|min:3|unique:roles',
+            'name' => 'bail|required|string|max:255|min:3|unique:roles,name,'.$this->role.',id',
         ];
     }
 }

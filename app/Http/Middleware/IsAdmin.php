@@ -16,7 +16,7 @@ class IsAdmin
      */
     public function handle($request, Closure $next)
     {
-        if (Auth::user()->hasRole("ADMIN")){
+        if (Auth::user()->hasRole('admin-panel')){
             return $next($request);
         }else{
             return redirect('/denied');
