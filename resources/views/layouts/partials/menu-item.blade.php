@@ -5,7 +5,7 @@
 @else
     @if (empty($item['role']) || auth()->user()->hasRole($item['role']))
         @if (empty($item['permission']) || auth()->user()->hasDirectPermission($item['permission']))
-            <li class="dropdown">
+            <li class="nav-item dropdown">
                 <a href="#"
                    class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                     {{ $item['name'] }} <span class="caret"></span>

@@ -33,4 +33,6 @@ class HomeController extends Controller
     public function denied(){
         return view('errors.403');
     }
+
+
 }
