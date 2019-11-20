@@ -24,6 +24,9 @@ Route::group([
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/contact', 'HomeController@contact')->name('contact');
 Route::get('/denied', 'HomeController@denied')->name('denied');
+Route::get('/profile', 'ProfileController@show')->name('profile.show');
+Route::get('/profile/edit', 'ProfileController@edit')->name('profile.edit');
+Route::put('/profile/edit', 'ProfileController@update')->name('profile.update');
 });
 
 //ADMIN routes
