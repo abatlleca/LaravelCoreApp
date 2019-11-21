@@ -12,10 +12,77 @@ class MenusTableSeeder extends Seeder
      */
     public function run()
     {
+        $m00 = factory(Menu::class)->create([
+            'name' => 'Tickets',
+            'route' => '',
+            'parent_id' => 0,
+            'order' => 0,
+            'environment' => 'admin-panel',
+            'role' => 'ticket',
+        ]);
+
+        $m001 = factory(Menu::class)->create([
+            'name' => 'Ticket List',
+            'route' => 'ad.tickets.index',
+            'parent_id' => $m00->id,
+            'order' => 0,
+            'environment' => 'admin-panel',
+            'role' => 'ticket',
+            'permission' => 'ticket-list',
+        ]);
+
+        $m12 = factory(Menu::class)->create([
+            'name' => 'Create Ticket',
+            'route' => 'ad.tickets.create',
+            'parent_id' => $m00->id,
+            'order' => 1,
+            'environment' => 'admin-panel',
+            'role' => 'ticket',
+            'permission' => 'ticket-create',
+        ]);
+
+        $m01 = factory(Menu::class)->create([
+            'name' => 'Customers',
+            'route' => '',
+            'parent_id' => 0,
+            'order' => 1,
+            'environment' => 'admin-panel',
+            'role' => 'customer',
+        ]);
+
+        $m001 = factory(Menu::class)->create([
+            'name' => 'Customers List',
+            'route' => 'customers.index',
+            'parent_id' => $m01->id,
+            'order' => 0,
+            'environment' => 'admin-panel',
+            'role' => 'customer',
+            'permission' => 'customer-list',
+        ]);
+
+        $m12 = factory(Menu::class)->create([
+            'name' => 'Create Customer',
+            'route' => 'customers.create',
+            'parent_id' => $m01->id,
+            'order' => 1,
+            'environment' => 'admin-panel',
+            'role' => 'customer',
+            'permission' => 'customer-create',
+        ]);
+
+        $m02 = factory(Menu::class)->create([
+            'name' => 'Configuration',
+            'route' => '',
+            'parent_id' => 0,
+            'order' => 2,
+            'environment' => 'admin-panel',
+            'role' => 'config',
+        ]);
+
         $m1 = factory(Menu::class)->create([
             'name' => 'Menus',
             'route' => '',
-            'parent_id' => 0,
+            'parent_id' => $m02->id,
             'order' => 0,
             'environment' => 'admin-panel',
             'role' => 'menu'
@@ -44,7 +111,7 @@ class MenusTableSeeder extends Seeder
         $m2 = factory(Menu::class)->create([
             'name' => 'Roles',
             'route' => '',
-            'parent_id' => 0,
+            'parent_id' => $m02->id,
             'order' => 1,
             'environment' => 'admin-panel',
             'role' => 'role',
@@ -73,7 +140,7 @@ class MenusTableSeeder extends Seeder
         $m3 = factory(Menu::class)->create([
             'name' => 'Permissions',
             'route' => '',
-            'parent_id' => 0,
+            'parent_id' => $m02->id,
             'order' => 2,
             'environment' => 'admin-panel',
             'role' => 'permission',
@@ -102,7 +169,7 @@ class MenusTableSeeder extends Seeder
         $m4 = factory(Menu::class)->create([
             'name' => 'Users',
             'route' => '',
-            'parent_id' => 0,
+            'parent_id' => $m02->id,
             'order' => 3,
             'environment' => 'admin-panel',
             'role' => 'user',
