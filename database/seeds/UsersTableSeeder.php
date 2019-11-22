@@ -24,7 +24,7 @@ class UsersTableSeeder extends Seeder
             ]
         );
 
-        $superadmin->assignRole('admin-panel', 'super-admin', 'user', 'menu', 'role', 'permission');
+        $superadmin->assignRole('admin-panel', 'super-admin', 'config', 'user', 'menu', 'role', 'permission', 'customer', 'ticket');
         $superadmin->syncPermissions($superadmin->getPermissionsViaRoles());
 
         //Create a default admin user
@@ -39,7 +39,7 @@ class UsersTableSeeder extends Seeder
             ]
         );
 
-        $admin->assignRole('admin-panel', 'user', 'menu', 'role', 'permission');
+        $admin->assignRole('admin-panel', 'config', 'user', 'menu', 'role', 'permission', 'customer', 'ticket');
         $admin->syncPermissions($admin->getPermissionsViaRoles());
 
         //Create a default customer user
@@ -54,7 +54,7 @@ class UsersTableSeeder extends Seeder
             ]
         );
 
-        $customer->assignRole('customer-panel', 'customer');
+        $customer->assignRole('customer-panel', 'customer-ticket');
         $customer->syncPermissions($customer->getPermissionsViaRoles());
     }
 }

@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'isActive',
+        'customer',
     ];
 
     /**
@@ -42,5 +43,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Customer user belongs
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function customer()
+    {
+        return $this->belongsTo('App\Customer');
+    }
+
+    public function tickets(){
+        return $this->hasMany('App\Ticket');
+    }
+
+    public function actuations(){
+        return $this->hasMany('App\Actuation');
+    }
 
 }

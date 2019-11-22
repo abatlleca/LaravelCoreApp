@@ -31,7 +31,7 @@ class MenusTableSeeder extends Seeder
             'permission' => 'ticket-list',
         ]);
 
-        $m12 = factory(Menu::class)->create([
+        $m002 = factory(Menu::class)->create([
             'name' => 'Create Ticket',
             'route' => 'ad.tickets.create',
             'parent_id' => $m00->id,
@@ -50,7 +50,7 @@ class MenusTableSeeder extends Seeder
             'role' => 'customer',
         ]);
 
-        $m001 = factory(Menu::class)->create([
+        $m011 = factory(Menu::class)->create([
             'name' => 'Customers List',
             'route' => 'customers.index',
             'parent_id' => $m01->id,
@@ -60,7 +60,7 @@ class MenusTableSeeder extends Seeder
             'permission' => 'customer-list',
         ]);
 
-        $m12 = factory(Menu::class)->create([
+        $m012 = factory(Menu::class)->create([
             'name' => 'Create Customer',
             'route' => 'customers.create',
             'parent_id' => $m01->id,
@@ -193,6 +193,35 @@ class MenusTableSeeder extends Seeder
             'environment' => 'admin-panel',
             'role' => 'user',
             'permission' => 'user-create',
+        ]);
+
+        $m03 = factory(Menu::class)->create([
+            'name' => 'Tickets',
+            'route' => '',
+            'parent_id' => 0,
+            'order' => 0,
+            'environment' => 'customer-panel',
+            'role' => 'customer-ticket',
+        ]);
+
+        $m031 = factory(Menu::class)->create([
+            'name' => 'Ticket List',
+            'route' => 'tickets.index',
+            'parent_id' => $m03->id,
+            'order' => 0,
+            'environment' => 'customer-panel',
+            'role' => 'customer-ticket',
+            'permission' => 'ticket-list',
+        ]);
+
+        $m032 = factory(Menu::class)->create([
+            'name' => 'Create Ticket',
+            'route' => 'tickets.create',
+            'parent_id' => $m03->id,
+            'order' => 1,
+            'environment' => 'customer-panel',
+            'role' => 'customer-ticket',
+            'permission' => 'ticket-create',
         ]);
 
         $mContact = factory(Menu::class)->create([

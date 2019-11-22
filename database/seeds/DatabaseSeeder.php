@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
         $this->call(MagicDoorTablesSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(MenusTableSeeder::class);
+        $this->call(StatusTableSeeder::class);
+        $this->call(CustomersTableSeeder::class);
 
 
     }

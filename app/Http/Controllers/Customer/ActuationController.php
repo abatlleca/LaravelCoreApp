@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
 
+use App\Actuation;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class CustomerController extends Controller
+class ActuationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,6 +17,15 @@ class CustomerController extends Controller
     {
         //
     }
+
+    /**
+     * Display all actuations for a given ticket
+     * @param $ticket
+     */
+    public function list($ticket){
+        //
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -40,10 +51,10 @@ class CustomerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Actuation  $actuation
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Actuation $actuation)
     {
         //
     }
@@ -51,10 +62,10 @@ class CustomerController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Actuation  $actuation
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Actuation $actuation)
     {
         //
     }
@@ -63,10 +74,10 @@ class CustomerController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Actuation  $actuation
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Actuation $actuation)
     {
         //
     }
@@ -74,10 +85,10 @@ class CustomerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Actuation  $actuation
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Actuation $actuation)
     {
         //
     }
