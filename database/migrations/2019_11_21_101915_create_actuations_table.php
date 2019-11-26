@@ -18,7 +18,7 @@ class CreateActuationsTable extends Migration
             $table->timestamps();
             $table->text('description');
             $table->string('origin');
-            $table->boolean('private')->default(0);
+            $table->boolean('isPrivate')->default(0);
 
             //FK
             $table->unsignedBigInteger('creator_id')->index();

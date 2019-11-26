@@ -42,8 +42,9 @@ Route::group([
     Route::resource('/users', 'UserController')->only(['index', 'show', 'edit', 'update']);
     Route::resource('/customers', 'CustomerController')->except(['destroy']);
     Route::resource('/tickets', 'TicketController', ['as' => 'ad'])->except(['destroy']);
-    Route::get('/actuations/{ticket}', 'ActuationController@index', ['as' => 'ad'])->name('actuations.listByTicket');
-    Route::resource('/actuations', 'ActuationController', ['as' => 'ad'])->except(['destroy']);
+    Route::get('/tickets/create/{customer_id?}', 'TicketController@create')->name('ad.tickets.create');
+    Route::resource('/actuations', 'ActuationController', ['as' => 'ad'])->except(['index', 'create', 'destroy']);
+    Route::get('/actuations/create/{ticket_id}', 'ActuationController@create')->name('ad.actuations.create');
 });
 
 //CUSTOMER routes
@@ -51,8 +52,8 @@ Route::group([
     'middleware' => ['auth', 'role:customer-panel', 'generate_menus'],
     'namespace' => 'Customer',
 ], function(){
-    Route::resource('/tickets', 'TicketController')->except(['destroy']);
-    Route::get('/actuations/{ticket}', 'ActuationController@list')->name('actuations.listByTicket');
-    Route::resource('/actuations', 'ActuationController')->except(['destroy']);
+    Route::resource('/tickets', 'TicketController', ['as' => 'cu'])->except(['destroy']);
+    Route::resource('/actuations', 'ActuationController', ['as' => 'cu'])->except(['index', 'create', 'destroy']);
+    Route::get('/actuations/create/{ticket_id}', 'ActuationController@create', ['as' => 'cu'])->name('actuations.create');
 
 });

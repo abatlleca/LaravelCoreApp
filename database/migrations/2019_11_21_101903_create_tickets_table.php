@@ -20,7 +20,7 @@ class CreateTicketsTable extends Migration
             $table->text('description');
             $table->string('origin');
             $table->unsignedTinyInteger('priority')->default(5);
-            $table->boolean('private')->default(0);
+            $table->boolean('isPrivate')->default(0);
             $table->boolean('closed')->default(0);
 
             //FK

@@ -8,7 +8,7 @@
                     <div class="card-header">
                         <div class="row">
                             <div class="col-md-4"><b>Tickets</b></div>
-                            <div class="col-md-8">
+                            <div class="col-md-8 text-right">
                                 @include('adminPanel.tickets.partials.search')
                             </div>
                         </div>

@@ -11,6 +11,7 @@ class Actuation extends Model
         'origin',
         'creator_id',
         'ticket_id',
+        'isPrivate',
     ];
 
     public function ticket(){

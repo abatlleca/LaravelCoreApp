@@ -16,6 +16,7 @@ class Ticket extends Model
         'customer_id',
         'creator_id',
         'status_id',
+        'isPrivate',
         'closed'
     ];
 
