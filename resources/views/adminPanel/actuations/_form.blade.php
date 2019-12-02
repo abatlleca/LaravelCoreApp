@@ -12,7 +12,7 @@
 </div>
 
 <div class="form-group row">
-    <input type="hidden" name="ticket_id" value="{{ $actuation->ticket_id }}">
+    <input type="hidden" name="ticket_id" value="{{ $actuation->ticket->id }}">
 </div>
 
 <div class="form-group row">

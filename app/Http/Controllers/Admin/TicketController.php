@@ -7,6 +7,7 @@ use App\Http\Requests\StoreTicket;
 use App\Menu;
 use App\Status;
 use App\Ticket;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -17,6 +18,8 @@ class TicketController extends Controller
      */
     public function index(Request $request)
     {
+        $this->authorize('list', Ticket::class);
+
         $statuses = Status::orderBy('name')->get();
 
         $tickets = Ticket::filter($request)
@@ -39,6 +42,8 @@ class TicketController extends Controller
      */
     public function create($customer_id = 0)
     {
+        $this->authorize('create', Ticket::class);
+
         $ticket = new Menu();
         $ticket->customer_id = $customer_id;
         $ticket->priority = 5;
@@ -66,6 +71,8 @@ class TicketController extends Controller
      */
     public function store(StoreTicket $request)
     {
+        $this->authorize('create', Ticket::class);
+
         //validate data
         $validateData = $request->validated();
         $newTicket = new Ticket();
@@ -92,6 +99,8 @@ class TicketController extends Controller
         }])
         ->findOrFail($id);
 
+        $this->authorize('show', $ticket);
+
         return view('adminPanel.tickets.show', ['ticket' => $ticket]);
     }
 
@@ -104,6 +113,7 @@ class TicketController extends Controller
     public function edit($id)
     {
         $ticket = Ticket::findOrFail($id);
+        $this->authorize('update', $ticket);
 
         $customers = Customer::orderBy('name')
             ->get();
@@ -127,15 +137,16 @@ class TicketController extends Controller
      */
     public function update(StoreTicket $request, $id)
     {
-        $validateData = $request->validated();
-        $newTicket = Ticket::findOrFail($id);
-        $newTicket->fill($validateData);
+        $ticket = Ticket::findOrFail($id);
+        $this->authorize('update', $ticket);
 
-        $newTicket->save();
+        $validateData = $request->validated();
+        $ticket->fill($validateData);
+        $ticket->save();
 
         $request->session()->flash('status', 'New Ticket Edited');
 
-        return redirect()->route('ad.tickets.show', ['ticket' => $newTicket->id]);
+        return redirect()->route('ad.tickets.show', ['ticket' => $ticket->id]);
     }
 
     /**

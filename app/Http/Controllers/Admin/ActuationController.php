@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Actuation;
 use App\Http\Requests\StoreActuation;
+use App\Ticket;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -27,8 +28,10 @@ class ActuationController extends Controller
     public function create($ticket_id = 0)
     {
         $actuation = new Actuation();
-        $actuation->ticket_id = $ticket_id;
+        $actuation->ticket = Ticket::findOrFail($ticket_id);
         $actuation->origin = "Tech";
+
+        $this->authorize('create', $actuation);
 
         return view('adminPanel.actuations.create', ['actuation' => $actuation]);
     }
@@ -46,6 +49,9 @@ class ActuationController extends Controller
         $newActuation = new Actuation();
         $newActuation->fill($validateData);
         $newActuation->creator_id = auth()->user()->id;
+
+        $this->authorize('create', $newActuation);
+
         $newActuation->save();
 
         $request->session()->flash('status', 'New Actuation Created');
@@ -74,6 +80,8 @@ class ActuationController extends Controller
     {
         $actuation = Actuation::findOrFail($id);
 
+        $this->authorize('update', $actuation);
+
         return view('adminPanel.actuations.edit', ['actuation' => $actuation]);
     }
 
@@ -86,9 +94,11 @@ class ActuationController extends Controller
      */
     public function update(StoreActuation $request, $id)
     {
+        $actuation = Actuation::findOrFail($id);
+        $this->authorize('update', $actuation);
+
         //validate data
         $validateData = $request->validated();
-        $actuation = Actuation::findOrFail($id);
         $actuation->fill($validateData);
         $actuation->save();
 

@@ -18,8 +18,8 @@ class AddFkToUsersTable extends Migration
 //            $table->string('role_name')->nullable()->index()->default('CUSTOMER');
 //            $table->foreign('role_name')->references('role_name')->on('roles');
 
-            $table->unsignedBigInteger('customer')->nullable()->index();
-            $table->foreign('customer')->references('id')->on('customers');
+            $table->unsignedBigInteger('customer_id')->nullable()->index();
+            $table->foreign('customer_id')->references('id')->on('customers');
         });
     }
 

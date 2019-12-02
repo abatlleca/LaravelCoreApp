@@ -17,7 +17,7 @@ class CreateCustomersTable extends Migration
             $table->bigIncrements('id');
             $table->timestamps();
             $table->string('name');
-            $table->boolean('active');
+            $table->boolean('isActive')->default(1);
         });
     }
 

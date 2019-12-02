@@ -81,7 +81,7 @@ class MenuController extends Controller
 
         $request->session()->flash('status', 'New Menu Created');
 
-        return redirect()->route('adminPanel.menus.show', ['menu' => $newMenu->id]);
+        return redirect()->route('menus.show', ['menu' => $newMenu->id]);
     }
 
     /**
@@ -146,7 +146,7 @@ class MenuController extends Controller
 
         //Add flash message to print the menu has been edited
         $request->session()->flash('status', 'Menu Edited');
-        return redirect()->route('adminPanel.menus.show', ['menu' => $menu->id]);
+        return redirect()->route('menus.show', ['menu' => $menu->id]);
     }
 
     /**

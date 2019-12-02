@@ -8,12 +8,12 @@ class Customer extends Model
 {
     protected $fillable = [
         'name',
-        'active',
+        'isActive',
     ];
 
-    public function name(){
-        return $this->name;
-    }
+//    public function name(){
+//        return $this->name;
+//    }
 
     /**
      * The users that belong to the customer.

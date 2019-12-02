@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreUser extends FormRequest
+class StoreCustomer extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,8 @@ class StoreUser extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'bail|required|string|max:255|min:3',
-            'email' => 'bail|required|string|email|unique:users,email,'.$this->user,
+            'name' => 'bail|required|max:255|min:3',
             'isActive' => 'bail|required|boolean',
-            'customer_id' => 'bail|numeric|exists:customers,id',
         ];
     }
 }

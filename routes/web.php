@@ -55,5 +55,4 @@ Route::group([
     Route::resource('/tickets', 'TicketController', ['as' => 'cu'])->except(['destroy']);
     Route::resource('/actuations', 'ActuationController', ['as' => 'cu'])->except(['index', 'create', 'destroy']);
     Route::get('/actuations/create/{ticket_id}', 'ActuationController@create', ['as' => 'cu'])->name('actuations.create');
-
 });
